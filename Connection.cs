@@ -1,38 +1,47 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Npgsql;
+using System;
+using System.Windows.Forms;
 
-namespace ClashRPG;
-
-public class Connection
+namespace ClashRPG
 {
-    private string connectionString;
-
-    public Connection()
+    public class Conexion
     {
-        this.connectionString = @"Server=localhost;Database=base de datos;Uid=root;Pwd=;";
-    }
+        private string connectionString;
 
-    public bool TestConnection()
-    {
-        try
+        public Conexion()
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            // Cadena de conexión de Supabase (ajústala con tus datos reales)
+            this.connectionString = @"Host=TU-HOST.supabase.co;
+                                      Port=5432;
+                                      Database=postgres;
+                                      Username=TU-USUARIO;
+                                      Password=TU-PASSWORD;
+                                      SslMode=Require";
+        }
+
+        public bool ProbarConexion()
+        {
+            try
             {
-                connection.Open();
-                MessageBox.Show("¡Conexión exitosa a 'base de datos'!");
-                return true;
+                using (var connection = new NpgsqlConnection(connectionString))
+                {
+                    connection.Open();
+                    MessageBox.Show("¡Conexión exitosa a Supabase/Postgres!");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error de conexión: {ex.Message}");
+                return false;
             }
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error de conexión: {ex.Message}");
-            return false;
-        }
-    }
 
-    public MySqlConnection ObtenerConexion()
-    {
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        connection.Open();
-        return connection;
+        public NpgsqlConnection ObtenerConexion()
+        {
+            var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+            return connection;
+        }
     }
 }
