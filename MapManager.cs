@@ -1,9 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-
-namespace ClashRPG;
+﻿namespace ClashRPG;
 
 public class MapManager
 {
