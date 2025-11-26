@@ -134,18 +134,12 @@ namespace ClashRPG
             this.comboResolucion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboResolucion.Items.AddRange(new object[]
             {
-                "800x600",
-                "1024x768",
                 "1280x720",
-                "1366x768",
-                "1600x900",
                 "1920x1080",
                 "2560x1440",
-                "3840x2160",
-                "5120x2880",
-                "7680x4320"
+                "3840x2160"
             });
-            this.comboResolucion.SelectedIndex = 5; // por defecto Full HD
+            this.comboResolucion.SelectedIndex = 1; // por defecto Full HD
             this.comboResolucion.SelectedIndexChanged += new System.EventHandler(this.comboResolucion_SelectedIndexChanged);
 
             this.groupPantalla.Controls.Add(this.lblBrillo);
