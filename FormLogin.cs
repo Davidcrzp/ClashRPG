@@ -26,9 +26,6 @@ public partial class FormLogin : Form
         // Centrar el panel de login
         CentrarPanelLogin();
 
-        // Configurar pantalla completa
-        Fullscreen();
-
         // REPRODUCIR MÚSICA AL INICIAR
         musicManager.ReproducirMusica();
         musicManager.Volume(Volume);
@@ -69,59 +66,9 @@ public partial class FormLogin : Form
         }
     }
 
-    private void Fullscreen()
-    {
-        this.WindowState = FormWindowState.Maximized;
-        this.FormBorderStyle = FormBorderStyle.None;
-        this.ControlBox = false;
-        this.MaximizeBox = false;
-        this.MinimizeBox = false;
-        this.Text = "Videojuego";
-    }
-
     protected override void OnResize(EventArgs e)
     {
         base.OnResize(e);
-        CentrarPanelLogin();
-    }
-
-    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-    {
-        if (keyData == Keys.Escape)
-        {
-            ExitFullscreen();
-            return true;
-        }
-        else if (keyData == Keys.F11)
-        {
-            Fullscreen();
-            return true;
-        }
-        else if (keyData == Keys.A)
-        {
-            if (Volume >= 1) return true;
-            Volume += 0.1f;
-            musicManager?.Volume(Volume);
-            Console.WriteLine(Volume);
-        }
-        else if (keyData == Keys.B)
-        {
-            if (Volume <= 0) return true;
-            Volume -= 0.1;
-            musicManager?.Volume(Volume);
-            Console.WriteLine(Volume);
-        }
-        return base.ProcessCmdKey(ref msg, keyData);
-    }
-
-    private void ExitFullscreen()
-    {
-        this.WindowState = FormWindowState.Normal;
-        this.FormBorderStyle = FormBorderStyle.Sizable;
-        this.ControlBox = true;
-        this.MaximizeBox = true;
-        this.MinimizeBox = true;
-        this.Text = "Proyecto - Videojuego";
         CentrarPanelLogin();
     }
 
