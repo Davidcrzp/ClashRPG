@@ -13,12 +13,12 @@ public class MusicManager : IDisposable
     {
         try
         {
-            string rutaMusica = @"Resources\Theme.mp3";
+            string rutaMusica = @"Assets\Sounds\Music\Theme.mp3";
 
             if (File.Exists(rutaMusica))
             {
                 // Detener música anterior si está reproduciéndose
-                DetenerMusica();
+                StopMusic();
 
                 // Crear nuevos objetos para reproducir
                 audioFile = new AudioFileReader(rutaMusica);
@@ -51,13 +51,13 @@ public class MusicManager : IDisposable
         }
     }
 
-    public void DetenerMusica()
+    public void StopMusic()
     {
         outputDevice?.Stop();
         isPlaying = false;
     }
 
-    public void ToggleMusica()
+    public void PlayMusic()
     {
         if (isMuted)
         {
@@ -73,9 +73,14 @@ public class MusicManager : IDisposable
         }
     }
 
+    public void Volume(float newVol)
+    {
+        outputDevice?.Volume = newVol;
+    }
+
     public void Dispose()
     {
-        DetenerMusica();
+        StopMusic();
         outputDevice?.Dispose();
         audioFile?.Dispose();
     }

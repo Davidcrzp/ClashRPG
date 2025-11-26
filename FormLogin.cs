@@ -35,7 +35,7 @@ public partial class FormLogin : Form
     {
         try
         {
-            string rutaFondo = @"Resources\logo.png";
+            string rutaFondo = @"Assets\Images\Background\Login.png";
 
             if (File.Exists(rutaFondo))
             {
