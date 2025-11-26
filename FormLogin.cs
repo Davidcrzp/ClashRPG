@@ -1,22 +1,24 @@
 namespace ClashRPG;
 
-public partial class Form1 : Form
+public partial class FormLogin : Form
 {
     private Login login;
-    private MapManager mapaManager;
+    private MapManager mapManager;
+    private MapBuilder mapBuilder;
     private MusicManager musicManager;
+    private double Volume = 1;
 
-    public Form1()
+    public FormLogin()
     {
         InitializeComponent();
+        FormOptions form = new FormOptions();
+        form.Show();
 
         // Inicializar managers
         login = new Login();
-        mapaManager = new MapManager(this);
+        mapManager = new MapManager(this);
+        mapBuilder = new MapBuilder();
         musicManager = new MusicManager();
-
-        // Configurar eventos
-        mapaManager.VolverAlLoginRequested += MostrarControlesLogin;
 
         // Cargar imagen de fondo
         CargarFondoLogin();
@@ -25,10 +27,11 @@ public partial class Form1 : Form
         CentrarPanelLogin();
 
         // Configurar pantalla completa
-        ConfigurarPantallaCompleta();
+        Fullscreen();
 
         // REPRODUCIR MÚSICA AL INICIAR
         musicManager.ReproducirMusica();
+        musicManager.Volume(Volume);
     }
 
     private void CargarFondoLogin()
@@ -66,7 +69,7 @@ public partial class Form1 : Form
         }
     }
 
-    private void ConfigurarPantallaCompleta()
+    private void Fullscreen()
     {
         this.WindowState = FormWindowState.Maximized;
         this.FormBorderStyle = FormBorderStyle.None;
@@ -86,19 +89,32 @@ public partial class Form1 : Form
     {
         if (keyData == Keys.Escape)
         {
-            SalirPantallaCompleta();
+            ExitFullscreen();
             return true;
         }
-        else if (keyData == Keys.M)
+        else if (keyData == Keys.F11)
         {
-            // Tecla M para silenciar/reactivar música
-            musicManager?.ToggleMusica();
+            Fullscreen();
             return true;
+        }
+        else if (keyData == Keys.A)
+        {
+            if (Volume >= 1) return true;
+            Volume += 0.1f;
+            musicManager?.Volume(Volume);
+            Console.WriteLine(Volume);
+        }
+        else if (keyData == Keys.B)
+        {
+            if (Volume <= 0) return true;
+            Volume -= 0.1;
+            musicManager?.Volume(Volume);
+            Console.WriteLine(Volume);
         }
         return base.ProcessCmdKey(ref msg, keyData);
     }
 
-    private void SalirPantallaCompleta()
+    private void ExitFullscreen()
     {
         this.WindowState = FormWindowState.Normal;
         this.FormBorderStyle = FormBorderStyle.Sizable;
@@ -123,14 +139,14 @@ public partial class Form1 : Form
 
         if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(contraseña))
         {
-            MessageBox.Show("Por favor, completa todos los campos.");
+            MessageBox.Show("Datos incompletos\nPor favor, completa todos los campos.");
             return;
         }
 
         if (login.VerificarLogin(usuario, contraseña))
         {
             MessageBox.Show("¡Login exitoso!");
-            MostrarMapa();
+            StartGame();
         }
         else
         {
@@ -145,7 +161,7 @@ public partial class Form1 : Form
 
         if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(contraseña))
         {
-            MessageBox.Show("Por favor, completa todos los campos.");
+            MessageBox.Show("Datos incompletos\nPor favor, completa todos los campos.");
             return;
         }
 
@@ -155,20 +171,13 @@ public partial class Form1 : Form
         }
     }
 
-    private void MostrarMapa()
+    private void StartGame()
     {
-        OcultarControlesLogin();
-
         // DETENER LA MÚSICA AL ENTRAR AL MAPA
-        musicManager?.DetenerMusica();
+        musicManager?.StopMusic();
+        this.Hide();
 
-        mapaManager.MostrarMapa();
-    }
-
-    private void OcultarControlesLogin()
-    {
-        panelLogin.Visible = false;
-        pictureBoxFondo.Visible = false; // También ocultar el fondo
+        mapManager.MostrarMapa();
     }
 
     private void MostrarControlesLogin()
