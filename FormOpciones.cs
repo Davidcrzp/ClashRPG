@@ -1,32 +1,38 @@
 using System;
 using System.Windows.Forms;
 
-namespace ClashRPG;
-
-public partial class FormOpciones : Form
+namespace ClashRPG
 {
-    public FormOpciones()
+    public partial class FormOpciones : Form
     {
-        InitializeComponent();
-    }
+        public FormOpciones()
+        {
+            InitializeComponent();
 
-    private void trackBarVolumenEfectos_Scroll(object sender, EventArgs e)
-    {
-        lblVolumenEfectos.Text = $"Volumen efectos: {trackBarVolumenEfectos.Value}%";
-    }
+            // Mostrar la resolución inicial en la etiqueta (SelectedIndex se establece en el Designer)
+            if (comboResolucion.SelectedItem != null)
+                lblResolucion.Text = $"Resolución: {comboResolucion.SelectedItem}";
+        }
 
-    private void trackBarVolumenMusica_Scroll(object sender, EventArgs e)
-    {
-        lblVolumenMusica.Text = $"Volumen música: {trackBarVolumenMusica.Value}%";
-    }
+        private void trackBarVolumenEfectos_Scroll(object sender, EventArgs e)
+        {
+            lblVolumenEfectos.Text = $"Volumen efectos: {trackBarVolumenEfectos.Value}%";
+        }
 
-    private void trackBarBrillo_Scroll(object sender, EventArgs e)
-    {
-        lblBrillo.Text = $"Brillo: {trackBarBrillo.Value}%";
-    }
+        private void trackBarVolumenMusica_Scroll(object sender, EventArgs e)
+        {
+            lblVolumenMusica.Text = $"Volumen música: {trackBarVolumenMusica.Value}%";
+        }
 
-    private void comboResolucion_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        lblResolucion.Text = $"Resolución: {comboResolucion.SelectedItem}";
+        private void trackBarBrillo_Scroll(object sender, EventArgs e)
+        {
+            lblBrillo.Text = $"Brillo: {trackBarBrillo.Value}%";
+        }
+
+        private void comboResolucion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboResolucion.SelectedItem != null)
+                lblResolucion.Text = $"Resolución: {comboResolucion.SelectedItem}";
+        }
     }
 }
