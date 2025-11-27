@@ -9,13 +9,11 @@ namespace ClashRPG
 
         private System.Windows.Forms.TrackBar trackBarVolumenEfectos;
         private System.Windows.Forms.TrackBar trackBarVolumenMusica;
-        private System.Windows.Forms.TrackBar trackBarBrillo;
 
         private System.Windows.Forms.ComboBox comboResolucion;
 
         private System.Windows.Forms.Label lblVolumenEfectos;
         private System.Windows.Forms.Label lblVolumenMusica;
-        private System.Windows.Forms.Label lblBrillo;
         private System.Windows.Forms.Label lblResolucion;
 
         private System.Windows.Forms.Button btnGuardar;
@@ -41,13 +39,11 @@ namespace ClashRPG
 
             this.trackBarVolumenEfectos = new System.Windows.Forms.TrackBar();
             this.trackBarVolumenMusica = new System.Windows.Forms.TrackBar();
-            this.trackBarBrillo = new System.Windows.Forms.TrackBar();
 
             this.comboResolucion = new System.Windows.Forms.ComboBox();
 
             this.lblVolumenEfectos = new System.Windows.Forms.Label();
             this.lblVolumenMusica = new System.Windows.Forms.Label();
-            this.lblBrillo = new System.Windows.Forms.Label();
             this.lblResolucion = new System.Windows.Forms.Label();
 
             this.btnGuardar = new System.Windows.Forms.Button();
@@ -55,14 +51,15 @@ namespace ClashRPG
 
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBrillo)).BeginInit();
 
             // =============================
-            // ESTILO FORM
+            // ESTILO GENERAL DEL FORM
             // =============================
             this.BackColor = azulFondo;
             this.ForeColor = dorado;
             this.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.ClientSize = new System.Drawing.Size(500, 400);
+            this.Text = "Opciones - Clash Royale Style";
 
             // =============================
             // GRUPO SONIDO
@@ -103,33 +100,21 @@ namespace ClashRPG
             this.groupSonido.Controls.Add(this.trackBarVolumenMusica);
 
             // =============================
-            // GRUPO PANTALLA
+            // GRUPO PANTALLA (SIN BRILLO)
             // =============================
             this.groupPantalla.Text = "Configuración de pantalla";
             this.groupPantalla.Location = new System.Drawing.Point(20, 190);
-            this.groupPantalla.Size = new System.Drawing.Size(450, 180);
+            this.groupPantalla.Size = new System.Drawing.Size(450, 120);
             this.groupPantalla.BackColor = grisPiedra;
             this.groupPantalla.ForeColor = dorado;
 
-            // --- Brillo etiqueta ---
-            this.lblBrillo.Location = new System.Drawing.Point(20, 30);
-            this.lblBrillo.Text = "Brillo: 50%";
-            this.lblBrillo.AutoSize = true;
-
-            // --- Brillo TrackBar ---
-            this.trackBarBrillo.Location = new System.Drawing.Point(20, 60);
-            this.trackBarBrillo.Maximum = 100;
-            this.trackBarBrillo.Value = 50;
-            this.trackBarBrillo.TickFrequency = 10;
-            this.trackBarBrillo.Scroll += new System.EventHandler(this.trackBarBrillo_Scroll);
-
             // --- Resolución etiqueta ---
-            this.lblResolucion.Location = new System.Drawing.Point(240, 30); // al lado derecho del brillo
+            this.lblResolucion.Location = new System.Drawing.Point(20, 30);
             this.lblResolucion.Text = "Resolución:";
             this.lblResolucion.AutoSize = true;
 
             // --- Combo resolución ---
-            this.comboResolucion.Location = new System.Drawing.Point(240, 60); // debajo de la etiqueta
+            this.comboResolucion.Location = new System.Drawing.Point(20, 60);
             this.comboResolucion.Size = new System.Drawing.Size(180, 25);
             this.comboResolucion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboResolucion.Items.AddRange(new object[]
@@ -139,11 +124,9 @@ namespace ClashRPG
                 "2560x1440",
                 "3840x2160"
             });
-            this.comboResolucion.SelectedIndex = 1; // por defecto Full HD
+            this.comboResolucion.SelectedIndex = 1;
             this.comboResolucion.SelectedIndexChanged += new System.EventHandler(this.comboResolucion_SelectedIndexChanged);
 
-            this.groupPantalla.Controls.Add(this.lblBrillo);
-            this.groupPantalla.Controls.Add(this.trackBarBrillo);
             this.groupPantalla.Controls.Add(this.lblResolucion);
             this.groupPantalla.Controls.Add(this.comboResolucion);
 
@@ -151,28 +134,29 @@ namespace ClashRPG
             // BOTONES
             // =============================
             this.btnGuardar.Text = "Guardar";
-            this.btnGuardar.Location = new System.Drawing.Point(260, 390);
+            this.btnGuardar.Location = new System.Drawing.Point(260, 330);
             this.btnGuardar.Size = new System.Drawing.Size(100, 40);
             this.btnGuardar.BackColor = azulClaro;
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
 
             this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.Location = new System.Drawing.Point(370, 390);
+            this.btnCancelar.Location = new System.Drawing.Point(370, 330);
             this.btnCancelar.Size = new System.Drawing.Size(100, 40);
             this.btnCancelar.BackColor = System.Drawing.Color.DarkRed;
             this.btnCancelar.ForeColor = System.Drawing.Color.White;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
 
-            // FORM
-            this.ClientSize = new System.Drawing.Size(500, 450);
+            // =============================
+            // AGREGAR TODO AL FORM
+            // =============================
             this.Controls.Add(this.groupSonido);
             this.Controls.Add(this.groupPantalla);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnCancelar);
-            this.Text = "Opciones - Clash Royale Style";
 
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBrillo)).EndInit();
             this.ResumeLayout(false);
         }
     }
