@@ -1,18 +1,19 @@
-namespace PantallaBotones
+namespace ClashRPG;
+
+partial class FormMap
 {
-    partial class Form1
+    private System.ComponentModel.IContainer components = null;
+
+    protected override void Dispose(bool disposing)
     {
-        private System.ComponentModel.IContainer components = null;
-
-        protected override void Dispose(bool disposing)
+        if (disposing && (components != null))
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            components.Dispose();
         }
+        base.Dispose(disposing);
+    }
 
+<<<<<<< HEAD
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -26,6 +27,20 @@ namespace PantallaBotones
             this.Load += new System.EventHandler(this.Form1_Load_1);
             this.ResumeLayout(false);
         }
+=======
+    private void InitializeComponent()
+    {
+        SuspendLayout();
+        // 
+        // FormMap
+        // 
+        ClientSize = new Size(278, 244);
+        Name = "FormMap";
+        StartPosition = FormStartPosition.CenterScreen;
+        Text = "Pantalla con Botones";
+        Load += FormMap_Load_1;
+        ResumeLayout(false);
+>>>>>>> 92f868ed4a2ea774b1d2f4f57b4be12d8d30a18b
     }
 }
 

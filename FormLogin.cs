@@ -6,6 +6,7 @@ using static System.Windows.Forms.DataFormats;
 
 namespace ClashRPG
 {
+<<<<<<< HEAD
     public partial class FormLogin : Form
     {
         private Login login;
@@ -15,6 +16,39 @@ namespace ClashRPG
         public static MusicManager effectsManager = new MusicManager();
 
         public FormLogin()
+=======
+    private Login login;
+    private FormMap map;
+    public static MusicManager musicManager = new MusicManager();
+    public static MusicManager effectsManager = new MusicManager();
+
+    public FormLogin()
+    {
+        InitializeComponent();
+        this.FormBorderStyle = FormBorderStyle.FixedSingle;
+        this.MaximizeBox = false;
+        FormSettings form = new FormSettings();
+        form.Show();
+
+        // Inicializar managers
+        login = new Login();
+        map = new FormMap();
+        map.Show();
+
+        // Cargar imagen de fondo
+        CargarFondoLogin();
+
+        // Centrar el panel de login
+        CentrarPanelLogin();
+
+        // REPRODUCIR MÚSICA AL INICIAR
+        musicManager.PlayMusic();
+    }
+
+    private void CargarFondoLogin()
+    {
+        try
+>>>>>>> 92f868ed4a2ea774b1d2f4f57b4be12d8d30a18b
         {
             InitializeComponent();
 
@@ -140,4 +174,28 @@ namespace ClashRPG
             MessageBox.Show("Opciones del Login (próximamente...)");
         }
     }
+<<<<<<< HEAD
 }
+=======
+
+    private void StartGame()
+    {
+        // DETENER LA MÚSICA AL ENTRAR AL MAPA
+        musicManager?.StopMusic();
+        this.Hide();
+
+        map.Show();
+    }
+
+    private void MostrarControlesLogin()
+    {
+        panelLogin.Visible = true;
+        pictureBoxFondo.Visible = true; // Mostrar el fondo nuevamente
+
+        // REANUDAR MÚSICA AL VOLVER AL LOGIN
+        musicManager?.PlayMusic();
+
+        CentrarPanelLogin();
+    }
+}
+>>>>>>> 92f868ed4a2ea774b1d2f4f57b4be12d8d30a18b

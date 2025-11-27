@@ -1,11 +1,8 @@
-using System;
-using System.Windows.Forms;
-
 namespace ClashRPG;
 
-public partial class FormOptions : Form
+public partial class FormSettings : Form
 {
-    public FormOptions()
+    public FormSettings()
     {
         InitializeComponent();
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -34,11 +31,6 @@ public partial class FormOptions : Form
     private void trackBarVolumenMusica_Scroll(object sender, EventArgs e)
     {
         lblVolumenMusica.Text = $"Volumen música: {trackBarVolumenMusica.Value}%";
-    }
-
-    private void trackBarBrillo_Scroll(object sender, EventArgs e)
-    {
-        lblBrillo.Text = $"Brillo: {trackBarBrillo.Value}%";
     }
 
     private void comboResolucion_SelectedIndexChanged(object sender, EventArgs e)
