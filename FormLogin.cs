@@ -3,7 +3,6 @@ namespace ClashRPG;
 public partial class FormLogin : Form
 {
     private Login login;
-    private MapManager mapManager;
     private FormMap map;
     public static MusicManager musicManager = new MusicManager();
     public static MusicManager effectsManager = new MusicManager();
@@ -13,12 +12,11 @@ public partial class FormLogin : Form
         InitializeComponent();
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
         this.MaximizeBox = false;
-        FormOptions form = new FormOptions();
+        FormSettings form = new FormSettings();
         form.Show();
 
         // Inicializar managers
         login = new Login();
-        mapManager = new MapManager(this);
         map = new FormMap();
         map.Show();
 
@@ -130,7 +128,7 @@ public partial class FormLogin : Form
         musicManager?.StopMusic();
         this.Hide();
 
-        mapManager.MostrarMapa();
+        map.Show();
     }
 
     private void MostrarControlesLogin()
