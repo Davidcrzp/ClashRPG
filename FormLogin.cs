@@ -1,22 +1,26 @@
 namespace ClashRPG;
 
-public partial class Form1 : Form
+public partial class FormLogin : Form
 {
     private Login login;
-    private MapManager mapaManager;
-    private MusicManager musicManager;
+    private MapManager mapManager;
+    private FormMap map;
+    public static MusicManager musicManager = new MusicManager();
+    public static MusicManager effectsManager = new MusicManager();
 
-    public Form1()
+    public FormLogin()
     {
         InitializeComponent();
+        this.FormBorderStyle = FormBorderStyle.FixedSingle;
+        this.MaximizeBox = false;
+        FormOptions form = new FormOptions();
+        form.Show();
 
         // Inicializar managers
         login = new Login();
-        mapaManager = new MapManager(this);
-        musicManager = new MusicManager();
-
-        // Configurar eventos
-        mapaManager.VolverAlLoginRequested += MostrarControlesLogin;
+        mapManager = new MapManager(this);
+        map = new FormMap();
+        map.Show();
 
         // Cargar imagen de fondo
         CargarFondoLogin();
@@ -24,18 +28,15 @@ public partial class Form1 : Form
         // Centrar el panel de login
         CentrarPanelLogin();
 
-        // Configurar pantalla completa
-        ConfigurarPantallaCompleta();
-
         // REPRODUCIR MÚSICA AL INICIAR
-        musicManager.ReproducirMusica();
+        musicManager.PlayMusic();
     }
 
     private void CargarFondoLogin()
     {
         try
         {
-            string rutaFondo = @"Resources\logo.png";
+            string rutaFondo = @"Assets\Images\Background\Login.png";
 
             if (File.Exists(rutaFondo))
             {
@@ -66,53 +67,21 @@ public partial class Form1 : Form
         }
     }
 
-    private void ConfigurarPantallaCompleta()
-    {
-        this.WindowState = FormWindowState.Maximized;
-        this.FormBorderStyle = FormBorderStyle.None;
-        this.ControlBox = false;
-        this.MaximizeBox = false;
-        this.MinimizeBox = false;
-        this.Text = "Videojuego";
-    }
-
     protected override void OnResize(EventArgs e)
     {
         base.OnResize(e);
         CentrarPanelLogin();
     }
 
-    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-    {
-        if (keyData == Keys.Escape)
-        {
-            SalirPantallaCompleta();
-            return true;
-        }
-        else if (keyData == Keys.M)
-        {
-            // Tecla M para silenciar/reactivar música
-            musicManager?.ToggleMusica();
-            return true;
-        }
-        return base.ProcessCmdKey(ref msg, keyData);
-    }
-
-    private void SalirPantallaCompleta()
-    {
-        this.WindowState = FormWindowState.Normal;
-        this.FormBorderStyle = FormBorderStyle.Sizable;
-        this.ControlBox = true;
-        this.MaximizeBox = true;
-        this.MinimizeBox = true;
-        this.Text = "Proyecto - Videojuego";
-        CentrarPanelLogin();
-    }
-
     // Detener música cuando se cierre el formulario
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
-        musicManager?.Dispose();
+        if (MessageBox.Show("Are you sure you want to close without saving?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        {
+            e.Cancel = true;
+        }
+        musicManager.Dispose();
+        effectsManager.Dispose();
         base.OnFormClosing(e);
     }
 
@@ -123,14 +92,14 @@ public partial class Form1 : Form
 
         if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(contraseña))
         {
-            MessageBox.Show("Por favor, completa todos los campos.");
+            MessageBox.Show("Datos incompletos\nPor favor, completa todos los campos.");
             return;
         }
 
         if (login.VerificarLogin(usuario, contraseña))
         {
             MessageBox.Show("¡Login exitoso!");
-            MostrarMapa();
+            StartGame();
         }
         else
         {
@@ -145,7 +114,7 @@ public partial class Form1 : Form
 
         if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(contraseña))
         {
-            MessageBox.Show("Por favor, completa todos los campos.");
+            MessageBox.Show("Datos incompletos\nPor favor, completa todos los campos.");
             return;
         }
 
@@ -155,20 +124,13 @@ public partial class Form1 : Form
         }
     }
 
-    private void MostrarMapa()
+    private void StartGame()
     {
-        OcultarControlesLogin();
-
         // DETENER LA MÚSICA AL ENTRAR AL MAPA
-        musicManager?.DetenerMusica();
+        musicManager?.StopMusic();
+        this.Hide();
 
-        mapaManager.MostrarMapa();
-    }
-
-    private void OcultarControlesLogin()
-    {
-        panelLogin.Visible = false;
-        pictureBoxFondo.Visible = false; // También ocultar el fondo
+        mapManager.MostrarMapa();
     }
 
     private void MostrarControlesLogin()
@@ -177,7 +139,7 @@ public partial class Form1 : Form
         pictureBoxFondo.Visible = true; // Mostrar el fondo nuevamente
 
         // REANUDAR MÚSICA AL VOLVER AL LOGIN
-        musicManager?.ReproducirMusica();
+        musicManager?.PlayMusic();
 
         CentrarPanelLogin();
     }
