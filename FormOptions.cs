@@ -8,9 +8,22 @@ public partial class FormOptions : Form
     public FormOptions()
     {
         InitializeComponent();
+        this.FormBorderStyle = FormBorderStyle.FixedSingle;
+        this.MaximizeBox = false;
 
         if (comboResolucion.SelectedItem != null)
             lblResolucion.Text = $"Resolución: {comboResolucion.SelectedItem}";
+    }
+
+    private void btnGuardar_Click(object sender, EventArgs e)
+    {
+        FormLogin.musicManager.Volume((float)trackBarVolumenMusica.Value / 100);
+        FormLogin.effectsManager.Volume((float)trackBarVolumenEfectos.Value / 100);
+    }
+
+    private void btnCerrar_Click(object sender, EventArgs e)
+    {
+        this.Close();
     }
 
     private void trackBarVolumenEfectos_Scroll(object sender, EventArgs e)

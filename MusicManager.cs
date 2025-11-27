@@ -9,19 +9,18 @@ public class MusicManager : IDisposable
     private bool isPlaying;
     private bool isMuted;
 
-    public void ReproducirMusica()
+    public void PlayMusic()
     {
         try
         {
-            string rutaMusica = @"Assets\Sounds\Music\Theme.mp3";
-
-            if (File.Exists(rutaMusica))
+            string themePath = @"Assets\Sounds\Music\Theme.mp3";
+            if (File.Exists(themePath))
             {
                 // Detener música anterior si está reproduciéndose
                 StopMusic();
 
                 // Crear nuevos objetos para reproducir
-                audioFile = new AudioFileReader(rutaMusica);
+                audioFile = new AudioFileReader(themePath);
                 outputDevice = new WaveOutEvent();
 
                 outputDevice.Init(audioFile);
@@ -42,7 +41,7 @@ public class MusicManager : IDisposable
             }
             else
             {
-                MessageBox.Show($"Archivo de música no encontrado en: {rutaMusica}");
+                MessageBox.Show($"Archivo de música no encontrado en: {themePath}");
             }
         }
         catch (Exception ex)
@@ -55,22 +54,6 @@ public class MusicManager : IDisposable
     {
         outputDevice?.Stop();
         isPlaying = false;
-    }
-
-    public void PlayMusic()
-    {
-        if (isMuted)
-        {
-            // Reactivar música
-            outputDevice?.Play();
-            isMuted = false;
-        }
-        else
-        {
-            // Silenciar música
-            outputDevice?.Pause();
-            isMuted = true;
-        }
     }
 
     public void Volume(float newVol)

@@ -19,7 +19,7 @@ partial class FormOptions
     private System.Windows.Forms.Label lblResolucion;
 
     private System.Windows.Forms.Button btnGuardar;
-    private System.Windows.Forms.Button btnCancelar;
+    private System.Windows.Forms.Button btnCerrar;
 
     protected override void Dispose(bool disposing)
     {
@@ -51,7 +51,7 @@ partial class FormOptions
         this.lblResolucion = new System.Windows.Forms.Label();
 
         this.btnGuardar = new System.Windows.Forms.Button();
-        this.btnCancelar = new System.Windows.Forms.Button();
+        this.btnCerrar = new System.Windows.Forms.Button();
 
         ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).BeginInit();
         ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).BeginInit();
@@ -155,20 +155,22 @@ partial class FormOptions
         this.btnGuardar.Size = new System.Drawing.Size(100, 40);
         this.btnGuardar.BackColor = azulClaro;
         this.btnGuardar.ForeColor = System.Drawing.Color.White;
+        this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
 
-        this.btnCancelar.Text = "Cancelar";
-        this.btnCancelar.Location = new System.Drawing.Point(370, 390);
-        this.btnCancelar.Size = new System.Drawing.Size(100, 40);
-        this.btnCancelar.BackColor = System.Drawing.Color.DarkRed;
-        this.btnCancelar.ForeColor = System.Drawing.Color.White;
+        this.btnCerrar.Text = "Cerrar";
+        this.btnCerrar.Location = new System.Drawing.Point(370, 390);
+        this.btnCerrar.Size = new System.Drawing.Size(100, 40);
+        this.btnCerrar.BackColor = System.Drawing.Color.DarkRed;
+        this.btnCerrar.ForeColor = System.Drawing.Color.White;
+        this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
 
         // FORM
         this.ClientSize = new System.Drawing.Size(500, 450);
         this.Controls.Add(this.groupSonido);
         this.Controls.Add(this.groupPantalla);
         this.Controls.Add(this.btnGuardar);
-        this.Controls.Add(this.btnCancelar);
-        this.Text = "Opciones - Clash Royale Style";
+        this.Controls.Add(this.btnCerrar);
+        this.Text = "Configuraciones - Clash Royale";
 
         ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).EndInit();
         ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).EndInit();

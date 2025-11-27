@@ -4,21 +4,23 @@ public partial class FormLogin : Form
 {
     private Login login;
     private MapManager mapManager;
-    private MapBuilder mapBuilder;
-    private MusicManager musicManager;
-    private double Volume = 1;
+    private FormMap map;
+    public static MusicManager musicManager = new MusicManager();
+    public static MusicManager effectsManager = new MusicManager();
 
     public FormLogin()
     {
         InitializeComponent();
+        this.FormBorderStyle = FormBorderStyle.FixedSingle;
+        this.MaximizeBox = false;
         FormOptions form = new FormOptions();
         form.Show();
 
         // Inicializar managers
         login = new Login();
         mapManager = new MapManager(this);
-        mapBuilder = new MapBuilder();
-        musicManager = new MusicManager();
+        map = new FormMap();
+        map.Show();
 
         // Cargar imagen de fondo
         CargarFondoLogin();
@@ -27,8 +29,7 @@ public partial class FormLogin : Form
         CentrarPanelLogin();
 
         // REPRODUCIR MÚSICA AL INICIAR
-        musicManager.ReproducirMusica();
-        musicManager.Volume(Volume);
+        musicManager.PlayMusic();
     }
 
     private void CargarFondoLogin()
@@ -75,7 +76,12 @@ public partial class FormLogin : Form
     // Detener música cuando se cierre el formulario
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
-        musicManager?.Dispose();
+        if (MessageBox.Show("Are you sure you want to close without saving?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        {
+            e.Cancel = true;
+        }
+        musicManager.Dispose();
+        effectsManager.Dispose();
         base.OnFormClosing(e);
     }
 
@@ -133,7 +139,7 @@ public partial class FormLogin : Form
         pictureBoxFondo.Visible = true; // Mostrar el fondo nuevamente
 
         // REANUDAR MÚSICA AL VOLVER AL LOGIN
-        musicManager?.ReproducirMusica();
+        musicManager?.PlayMusic();
 
         CentrarPanelLogin();
     }
