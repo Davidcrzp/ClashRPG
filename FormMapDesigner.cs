@@ -15,16 +15,17 @@ namespace PantallaBotones
 
         private void InitializeComponent()
         {
-            SuspendLayout();
+            this.SuspendLayout();
             // 
             // Form1
             // 
-            ClientSize = new Size(278, 244);
-            Name = "Form1";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Pantalla con Botones";
-            Load += Form1_Load_1;
-            ResumeLayout(false);
+            this.ClientSize = new System.Drawing.Size(278, 244);
+            this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Pantalla con Botones";
+            this.Load += new System.EventHandler(this.Form1_Load_1);
+            this.ResumeLayout(false);
         }
     }
 }
+

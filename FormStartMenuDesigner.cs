@@ -3,11 +3,13 @@ namespace ClashRPG
     partial class FormStartMenu
     {
         private System.ComponentModel.IContainer components = null;
+
         private Label lblTitulo;
         private PictureBox picLogo;
         private Button btnContinuar;
         private Button btnNuevaPartida;
         private Button btnSalir;
+        private Button btnOpciones;  // botón hamburguesa
 
         protected override void Dispose(bool disposing)
         {
@@ -25,6 +27,8 @@ namespace ClashRPG
             this.btnContinuar = new System.Windows.Forms.Button();
             this.btnNuevaPartida = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.btnOpciones = new System.Windows.Forms.Button();
+
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.SuspendLayout();
 
@@ -37,7 +41,7 @@ namespace ClashRPG
 
             this.BackColor = azulFondo;
 
-            // ===== TÍTULO (AJUSTADO PARA QUE YA NO SE CORTE) =====
+            // ===== TÍTULO =====
             this.lblTitulo.Font = new System.Drawing.Font("Arial Black", 36F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = dorado;
             this.lblTitulo.Location = new System.Drawing.Point(0, 10);
@@ -47,15 +51,15 @@ namespace ClashRPG
             this.lblTitulo.Text = "CLASH RPG";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
-            // ===== CUADRO NEGRO DONDE IRÁ LA IMAGEN =====
+            // ===== LOGO (CUADRO NEGRO) =====
             this.picLogo.Location = new System.Drawing.Point(120, 100);
             this.picLogo.Name = "picLogo";
             this.picLogo.Size = new System.Drawing.Size(540, 250);
-            this.picLogo.BackColor = System.Drawing.Color.Black;   // ⬅ CUADRO NEGRO
+            this.picLogo.BackColor = System.Drawing.Color.Black;
             this.picLogo.TabIndex = 1;
             this.picLogo.TabStop = false;
 
-            // ===== ESTILO DE BOTONES =====
+            // ===== FUNCIÓN PARA BOTONES =====
             void EstiloBoton(Button b, bool esSalir = false)
             {
                 b.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -67,7 +71,32 @@ namespace ClashRPG
                 b.FlatAppearance.MouseOverBackColor = esSalir ? System.Drawing.Color.DarkRed : azulHover;
             }
 
-            // Botón Continuar
+            // ===== BOTÓN OPCIONES (HAMBURGUESA) =====
+            this.btnOpciones.Location = new System.Drawing.Point(720, 10);
+            this.btnOpciones.Name = "btnOpciones";
+            this.btnOpciones.Size = new System.Drawing.Size(50, 45);
+            this.btnOpciones.TabIndex = 5;
+
+            this.btnOpciones.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpciones.FlatAppearance.BorderSize = 3;
+            this.btnOpciones.FlatAppearance.BorderColor = dorado;
+            this.btnOpciones.BackColor = azulBoton;
+            this.btnOpciones.FlatAppearance.MouseOverBackColor = azulHover;
+
+            this.btnOpciones.Paint += (s, e) =>
+            {
+                var g = e.Graphics;
+                using (var pen = new System.Drawing.Pen(System.Drawing.Color.White, 4))
+                {
+                    g.DrawLine(pen, 10, 10, 40, 10);
+                    g.DrawLine(pen, 10, 20, 40, 20);
+                    g.DrawLine(pen, 10, 30, 40, 30);
+                }
+            };
+
+            this.btnOpciones.Click += new System.EventHandler(this.btnOpciones_Click);
+
+            // ===== BOTÓN CONTINUAR =====
             this.btnContinuar.Location = new System.Drawing.Point(230, 380);
             this.btnContinuar.Name = "btnContinuar";
             this.btnContinuar.Size = new System.Drawing.Size(320, 55);
@@ -76,7 +105,7 @@ namespace ClashRPG
             EstiloBoton(this.btnContinuar);
             this.btnContinuar.Click += new System.EventHandler(this.btnContinuar_Click);
 
-            // Botón Nueva Partida
+            // ===== BOTÓN NUEVA PARTIDA =====
             this.btnNuevaPartida.Location = new System.Drawing.Point(230, 445);
             this.btnNuevaPartida.Name = "btnNuevaPartida";
             this.btnNuevaPartida.Size = new System.Drawing.Size(320, 55);
@@ -85,7 +114,7 @@ namespace ClashRPG
             EstiloBoton(this.btnNuevaPartida);
             this.btnNuevaPartida.Click += new System.EventHandler(this.btnNuevaPartida_Click);
 
-            // Botón Salir
+            // ===== BOTÓN SALIR =====
             this.btnSalir.Location = new System.Drawing.Point(230, 510);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(320, 55);
@@ -98,11 +127,14 @@ namespace ClashRPG
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 591);
+
+            this.Controls.Add(this.btnOpciones);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnNuevaPartida);
             this.Controls.Add(this.btnContinuar);
             this.Controls.Add(this.picLogo);
             this.Controls.Add(this.lblTitulo);
+
             this.Name = "FormStartMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ClashRPG - Menú Principal";
