@@ -12,17 +12,23 @@ public partial class FormSettings : Form
             lblResolution.Text = $"Resolución: {comboResolution.SelectedItem}";
     }
 
-    private void btnGuardar_Click(object sender, EventArgs e)
-    {
-        FormLogin.musicManager.Volume((float)trackBarVolumenMusica.Value / 100);
-        FormLogin.effectsManager.Volume((float)trackBarVolumenEfectos.Value / 100);
-        if (FormLogin.setResolution != comboResolution.SelectedItem.ToString())
-            FormLogin.ReloadMap();
-    }
-
     private void btnCerrar_Click(object sender, EventArgs e)
     {
-        this.Close();
+        // Oculta sin cerrar el form
+        this.Hide();
+    }
+
+    private void btnSalir_Click(object sender, EventArgs e)
+    {
+        var result = MessageBox.Show(
+            "¿Seguro que deseas salir del juego?",
+            "Confirmar salida",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question
+        );
+
+        if (result == DialogResult.Yes)
+            Application.Exit();
     }
 
     private void trackBarVolumenEfectos_Scroll(object sender, EventArgs e)
@@ -48,6 +54,7 @@ public partial class FormSettings : Form
 
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
+        // Evita que se destruya el formulario (cuando se presione X)
         this.Hide();
         e.Cancel = true;
     }

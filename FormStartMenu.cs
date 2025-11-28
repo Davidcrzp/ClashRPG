@@ -31,4 +31,13 @@ public partial class FormStartMenu : Form
     {
         Application.Exit();
     }
+
+    private void btnConfig_Click(object sender, EventArgs e)
+    {
+        MessageBox.Show("Abrir configuración...");
+        // Aquí puedes abrir un FormConfig o mostrar un menú contextual
+        // Ejemplo:
+        // FormConfig config = new FormConfig();
+        // config.ShowDialog();
+    }
 }

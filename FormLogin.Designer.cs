@@ -10,7 +10,8 @@ partial class FormLogin
     private Label label1;
     private Label label2;
     private Panel panelLogin;
-    private PictureBox pictureBoxFondo; // ← AGREGADO
+    private PictureBox pictureBoxFondo;
+    private Button btnConfig; // ← NUEVO BOTÓN
 
     protected override void Dispose(bool disposing)
     {
@@ -23,7 +24,7 @@ partial class FormLogin
 
     private void InitializeComponent()
     {
-        this.pictureBoxFondo = new PictureBox(); // ← AGREGADO
+        this.pictureBoxFondo = new PictureBox();
         this.panelLogin = new Panel();
         this.txtUsuario = new TextBox();
         this.txtContraseña = new TextBox();
@@ -31,11 +32,13 @@ partial class FormLogin
         this.btnRegistrar = new Button();
         this.label1 = new Label();
         this.label2 = new Label();
-        ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFondo)).BeginInit(); // ← AGREGADO
+        this.btnConfig = new Button(); // ← AGREGADO
+
+        ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFondo)).BeginInit();
         this.panelLogin.SuspendLayout();
         this.SuspendLayout();
 
-        // pictureBoxFondo - Fondo del login
+        // pictureBoxFondo
         this.pictureBoxFondo.Dock = DockStyle.Fill;
         this.pictureBoxFondo.Location = new Point(0, 0);
         this.pictureBoxFondo.Name = "pictureBoxFondo";
@@ -44,8 +47,8 @@ partial class FormLogin
         this.pictureBoxFondo.TabIndex = 0;
         this.pictureBoxFondo.TabStop = false;
 
-        // panelLogin - Para centrar los controles en pantalla completa
-        this.panelLogin.BackColor = Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+        // panelLogin
+        this.panelLogin.BackColor = Color.FromArgb(240, 240, 240);
         this.panelLogin.BorderStyle = BorderStyle.FixedSingle;
         this.panelLogin.Controls.Add(this.label2);
         this.panelLogin.Controls.Add(this.label1);
@@ -56,7 +59,7 @@ partial class FormLogin
         this.panelLogin.Location = new Point(0, 0);
         this.panelLogin.Name = "panelLogin";
         this.panelLogin.Size = new Size(350, 200);
-        this.panelLogin.TabIndex = 1; // Cambiado de 0 a 1
+        this.panelLogin.TabIndex = 1;
 
         // txtUsuario
         this.txtUsuario.Location = new Point(120, 40);
@@ -97,7 +100,7 @@ partial class FormLogin
 
         // label1
         this.label1.AutoSize = true;
-        this.label1.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+        this.label1.Font = new Font("Microsoft Sans Serif", 9F);
         this.label1.Location = new Point(50, 43);
         this.label1.Name = "label1";
         this.label1.Size = new Size(54, 15);
@@ -106,24 +109,39 @@ partial class FormLogin
 
         // label2
         this.label2.AutoSize = true;
-        this.label2.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+        this.label2.Font = new Font("Microsoft Sans Serif", 9F);
         this.label2.Location = new Point(35, 83);
         this.label2.Name = "label2";
         this.label2.Size = new Size(74, 15);
         this.label2.TabIndex = 5;
         this.label2.Text = "Contraseña:";
 
-        // LoginForm - Configuración para pantalla completa
+        // btnConfig (arriba a la derecha)
+        this.btnConfig.FlatStyle = FlatStyle.Flat;
+        this.btnConfig.BackColor = Color.Transparent;
+        this.btnConfig.ForeColor = Color.Black;
+        this.btnConfig.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold);
+        this.btnConfig.Location = new Point(1150, 10); // esquina superior derecha
+        this.btnConfig.Size = new Size(40, 40);
+        this.btnConfig.Name = "btnConfig";
+        this.btnConfig.Text = "≡"; // tres líneas horizontales
+        this.btnConfig.UseVisualStyleBackColor = true;
+        this.btnConfig.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+        this.btnConfig.Click += new EventHandler(this.btnConfig_Click);
+
+        // LoginForm
         this.AutoScaleDimensions = new SizeF(6F, 13F);
         this.AutoScaleMode = AutoScaleMode.Font;
         this.BackColor = Color.White;
         this.ClientSize = new Size(1200, 800);
+        this.Controls.Add(this.btnConfig); // ← AGREGADO
         this.Controls.Add(this.panelLogin);
-        this.Controls.Add(this.pictureBoxFondo); // ← AGREGADO - IMPORTANTE
+        this.Controls.Add(this.pictureBoxFondo);
         this.Name = "LoginForm";
         this.StartPosition = FormStartPosition.CenterScreen;
         this.Text = "Videojuego - Login";
-        ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFondo)).EndInit(); // ← AGREGADO
+
+        ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFondo)).EndInit();
         this.panelLogin.ResumeLayout(false);
         this.panelLogin.PerformLayout();
         this.ResumeLayout(false);

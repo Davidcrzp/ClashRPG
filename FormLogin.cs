@@ -2,33 +2,36 @@ namespace ClashRPG;
 
 public partial class FormLogin : Form
 {
-    private Login login = new Login();
-    private FormStartMenu startMenu = new FormStartMenu();
-    public static FormSettings settings = new FormSettings();
-    public static MusicManager musicManager = new MusicManager();
-    public static MusicManager effectsManager = new MusicManager();
-    public static FormMap map = new FormMap();
-    public static string setResolution = "";
+    private Login login;
+    private MapManager mapManager;
+    private MapBuilder mapBuilder;
+    private MusicManager musicManager;
+    private double Volume = 1;
 
     public FormLogin()
     {
         InitializeComponent();
-        this.FormBorderStyle = FormBorderStyle.FixedSingle;
-        this.MaximizeBox = false;
+        FormOptions form = new FormOptions();
+        form.Show();
 
-        setResolution = settings.getResolution();
+        // Inicializar managers
+        login = new Login();
+        mapManager = new MapManager(this);
+        mapBuilder = new MapBuilder();
+        musicManager = new MusicManager();
 
         // Cargar imagen de fondo
-        LoadBackgroundImg();
+        CargarFondoLogin();
 
         // Centrar el panel de login
-        CenterLogin();
+        CentrarPanelLogin();
 
         // REPRODUCIR MÚSICA AL INICIAR
-        musicManager.PlayMusic();
+        musicManager.ReproducirMusica();
+        musicManager.Volume(Volume);
     }
 
-    private void LoadBackgroundImg()
+    private void CargarFondoLogin()
     {
         try
         {
@@ -40,7 +43,6 @@ public partial class FormLogin : Form
             }
             else
             {
-                // Si no encuentra la imagen, crear fondo de color
                 pictureBoxFondo.BackColor = Color.LightGray;
             }
         }
@@ -51,14 +53,13 @@ public partial class FormLogin : Form
         }
     }
 
-    private void CenterLogin()
+    private void CentrarPanelLogin()
     {
         if (panelLogin != null)
         {
-            // BAJAR el panel significativamente
             panelLogin.Location = new Point(
                 (this.ClientSize.Width - panelLogin.Width) / 2,
-                this.ClientSize.Height - panelLogin.Height - 100  // ← 100px desde abajo
+                this.ClientSize.Height - panelLogin.Height - 100
             );
         }
     }
@@ -66,14 +67,12 @@ public partial class FormLogin : Form
     protected override void OnResize(EventArgs e)
     {
         base.OnResize(e);
-        CenterLogin();
+        CentrarPanelLogin();
     }
 
-    // Detener música cuando se cierre el formulario
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
-        musicManager.Dispose();
-        effectsManager.Dispose();
+        musicManager?.Dispose();
         base.OnFormClosing(e);
     }
 
@@ -113,7 +112,6 @@ public partial class FormLogin : Form
         if (login.RegistrarUsuario(usuario, contraseña))
         {
             MessageBox.Show("Usuario registrado!");
-            StartGame();
         }
     }
 
@@ -121,15 +119,24 @@ public partial class FormLogin : Form
     {
         musicManager?.StopMusic();
         this.Hide();
-        startMenu.Show();
+
+        mapManager.MostrarMapa();
     }
 
-    public static void ReloadMap()
+    private void MostrarControlesLogin()
     {
-        map.Dispose();
-        map = new FormMap();
-        setResolution = settings.getResolution();
-        map.LoadMap(setResolution);
-        map.Show();
+        panelLogin.Visible = true;
+        pictureBoxFondo.Visible = true;
+
+        musicManager?.ReproducirMusica();
+
+        CentrarPanelLogin();
+    }
+
+    // Evento del botón de configuración
+    private void btnConfig_Click(object sender, EventArgs e)
+    {
+        FormOptions opciones = new FormOptions();
+        opciones.ShowDialog(); // abrir configuración
     }
 }

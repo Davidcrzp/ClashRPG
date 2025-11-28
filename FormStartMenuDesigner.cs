@@ -8,6 +8,7 @@ partial class FormStartMenu
     private Button btnContinuar;
     private Button btnNuevaPartida;
     private Button btnSalir;
+    private Button btnConfig; // ⬅ nuevo botón
 
     protected override void Dispose(bool disposing)
     {
@@ -25,6 +26,7 @@ partial class FormStartMenu
         this.btnContinuar = new System.Windows.Forms.Button();
         this.btnNuevaPartida = new System.Windows.Forms.Button();
         this.btnSalir = new System.Windows.Forms.Button();
+        this.btnConfig = new System.Windows.Forms.Button(); // ⬅ inicialización
         ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
         this.SuspendLayout();
 
@@ -37,7 +39,7 @@ partial class FormStartMenu
 
         this.BackColor = azulFondo;
 
-        // ===== TÍTULO (AJUSTADO PARA QUE YA NO SE CORTE) =====
+        // ===== TÍTULO =====
         this.lblTitulo.Font = new System.Drawing.Font("Arial Black", 36F, System.Drawing.FontStyle.Bold);
         this.lblTitulo.ForeColor = dorado;
         this.lblTitulo.Location = new System.Drawing.Point(0, 10);
@@ -47,13 +49,13 @@ partial class FormStartMenu
         this.lblTitulo.Text = "CLASH RPG";
         this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
-        // ===== CUADRO NEGRO DONDE IRÁ LA IMAGEN =====
+        // ===== LOGO =====
         this.picLogo.Location = new System.Drawing.Point(120, 100);
         this.picLogo.Name = "picLogo";
         this.picLogo.Image = Image.FromFile(@"Assets\Images\Background\Banner.png");
         this.picLogo.SizeMode = PictureBoxSizeMode.Zoom;
         this.picLogo.Size = new System.Drawing.Size(540, 250);
-        this.picLogo.BackColor = System.Drawing.Color.Transparent;   // ⬅ CUADRO NEGRO
+        this.picLogo.BackColor = System.Drawing.Color.Transparent;
         this.picLogo.TabIndex = 1;
         this.picLogo.TabStop = false;
 
@@ -96,10 +98,21 @@ partial class FormStartMenu
         EstiloBoton(this.btnSalir, esSalir: true);
         this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
 
+        // ===== Botón Configuración (3 barras horizontales) =====
+        this.btnConfig.Location = new System.Drawing.Point(700, 20); // arriba derecha
+        this.btnConfig.Name = "btnConfig";
+        this.btnConfig.Size = new System.Drawing.Size(60, 40);
+        this.btnConfig.TabIndex = 5;
+        this.btnConfig.Text = "≡"; // símbolo de menú hamburguesa
+        this.btnConfig.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+        EstiloBoton(this.btnConfig);
+        this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
+
         // ===== FORM =====
         this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(784, 591);
+        this.Controls.Add(this.btnConfig); // ⬅ agregado
         this.Controls.Add(this.btnSalir);
         this.Controls.Add(this.btnNuevaPartida);
         this.Controls.Add(this.btnContinuar);
@@ -112,5 +125,4 @@ partial class FormStartMenu
         ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
         this.ResumeLayout(false);
     }
-
 }
