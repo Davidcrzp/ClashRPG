@@ -26,4 +26,13 @@ public partial class FormStartMenu : Form
     {
         Application.Exit();
     }
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        if (MessageBox.Show("Estas seguro que quieres salir?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        {
+            e.Cancel = true;
+        }
+        Application.Exit();
+    }
 }

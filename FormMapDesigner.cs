@@ -23,7 +23,6 @@ partial class FormMap
         Name = "FormMap";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Pantalla con Botones";
-        Load += FormMap_Load_1;
         ResumeLayout(false);
     }
 }

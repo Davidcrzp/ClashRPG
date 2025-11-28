@@ -10,11 +10,11 @@ namespace ClashRPG
         private System.Windows.Forms.TrackBar trackBarVolumenEfectos;
         private System.Windows.Forms.TrackBar trackBarVolumenMusica;
 
-        private System.Windows.Forms.ComboBox comboResolucion;
+        public System.Windows.Forms.ComboBox comboResolution;
 
         private System.Windows.Forms.Label lblVolumenEfectos;
         private System.Windows.Forms.Label lblVolumenMusica;
-        private System.Windows.Forms.Label lblResolucion;
+        private System.Windows.Forms.Label lblResolution;
 
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnCerrar;
@@ -40,11 +40,11 @@ namespace ClashRPG
             this.trackBarVolumenEfectos = new System.Windows.Forms.TrackBar();
             this.trackBarVolumenMusica = new System.Windows.Forms.TrackBar();
 
-            this.comboResolucion = new System.Windows.Forms.ComboBox();
+            this.comboResolution = new System.Windows.Forms.ComboBox();
 
             this.lblVolumenEfectos = new System.Windows.Forms.Label();
             this.lblVolumenMusica = new System.Windows.Forms.Label();
-            this.lblResolucion = new System.Windows.Forms.Label();
+            this.lblResolution = new System.Windows.Forms.Label();
 
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnCerrar = new System.Windows.Forms.Button();
@@ -109,26 +109,26 @@ namespace ClashRPG
             this.groupPantalla.ForeColor = dorado;
 
             // --- Resolución etiqueta ---
-            this.lblResolucion.Location = new System.Drawing.Point(20, 30);
-            this.lblResolucion.Text = "Resolución:";
-            this.lblResolucion.AutoSize = true;
+            this.lblResolution.Location = new System.Drawing.Point(20, 30);
+            this.lblResolution.Text = "Resolución:";
+            this.lblResolution.AutoSize = true;
 
             // --- Combo resolución ---
-            this.comboResolucion.Location = new System.Drawing.Point(20, 60);
-            this.comboResolucion.Size = new System.Drawing.Size(180, 25);
-            this.comboResolucion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboResolucion.Items.AddRange(new object[]
+            this.comboResolution.Location = new System.Drawing.Point(20, 60);
+            this.comboResolution.Size = new System.Drawing.Size(180, 25);
+            this.comboResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboResolution.Items.AddRange(new string[]
             {
                 "1280x720",
                 "1920x1080",
                 "2560x1440",
                 "3840x2160"
             });
-            this.comboResolucion.SelectedIndex = 1;
-            this.comboResolucion.SelectedIndexChanged += new System.EventHandler(this.comboResolucion_SelectedIndexChanged);
+            this.comboResolution.SelectedIndex = 1;
+            this.comboResolution.SelectedIndexChanged += new System.EventHandler(this.comboResolution_SelectedIndexChanged);
 
-            this.groupPantalla.Controls.Add(this.lblResolucion);
-            this.groupPantalla.Controls.Add(this.comboResolucion);
+            this.groupPantalla.Controls.Add(this.lblResolution);
+            this.groupPantalla.Controls.Add(this.comboResolution);
 
             // =============================
             // BOTONES

@@ -3,34 +3,41 @@ namespace ClashRPG;
 public partial class FormLogin : Form
 {
     private Login login;
-    private FormMap map;
+    private FormStartMenu startMenu;
+    public static FormSettings settings = new FormSettings();
     public static MusicManager musicManager = new MusicManager();
     public static MusicManager effectsManager = new MusicManager();
+    public static FormMap map = new FormMap();
+    public static string setResolution = "";
 
     public FormLogin()
     {
         InitializeComponent();
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
         this.MaximizeBox = false;
-        FormSettings form = new FormSettings();
-        form.Show();
+
+        setResolution = settings.getResolution();
+        settings.Show();
+
+        map = new FormMap();
+        map.LoadMap(setResolution);
+        map.Show();
 
         // Inicializar managers
         login = new Login();
-        map = new FormMap();
-        map.Show();
+        startMenu = new FormStartMenu();
 
         // Cargar imagen de fondo
-        CargarFondoLogin();
+        LoadBackgroundImg();
 
         // Centrar el panel de login
-        CentrarPanelLogin();
+        CenterLogin();
 
         // REPRODUCIR MÚSICA AL INICIAR
         musicManager.PlayMusic();
     }
 
-    private void CargarFondoLogin()
+    private void LoadBackgroundImg()
     {
         try
         {
@@ -53,7 +60,7 @@ public partial class FormLogin : Form
         }
     }
 
-    private void CentrarPanelLogin()
+    private void CenterLogin()
     {
         if (panelLogin != null)
         {
@@ -68,16 +75,12 @@ public partial class FormLogin : Form
     protected override void OnResize(EventArgs e)
     {
         base.OnResize(e);
-        CentrarPanelLogin();
+        CenterLogin();
     }
 
     // Detener música cuando se cierre el formulario
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
-        if (MessageBox.Show("Are you sure you want to close without saving?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-        {
-            e.Cancel = true;
-        }
         musicManager.Dispose();
         effectsManager.Dispose();
         base.OnFormClosing(e);
@@ -119,26 +122,23 @@ public partial class FormLogin : Form
         if (login.RegistrarUsuario(usuario, contraseña))
         {
             MessageBox.Show("Usuario registrado!");
+            StartGame();
         }
     }
 
     private void StartGame()
     {
-        // DETENER LA MÚSICA AL ENTRAR AL MAPA
         musicManager?.StopMusic();
         this.Hide();
-
-        map.Show();
+        startMenu.Show();
     }
 
-    private void MostrarControlesLogin()
+    public static void ReloadMap()
     {
-        panelLogin.Visible = true;
-        pictureBoxFondo.Visible = true; // Mostrar el fondo nuevamente
-
-        // REANUDAR MÚSICA AL VOLVER AL LOGIN
-        musicManager?.PlayMusic();
-
-        CentrarPanelLogin();
+        map.Dispose();
+        map = new FormMap();
+        setResolution = settings.getResolution();
+        map.LoadMap(setResolution);
+        map.Show();
     }
 }
