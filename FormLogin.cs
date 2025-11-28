@@ -5,17 +5,19 @@ public partial class FormLogin : Form
     private Login login = new Login();
     private FormStartMenu startMenu = new FormStartMenu();
     public static FormSettings settings = new FormSettings();
-    FormSelectCharacter character = new();
-    FormSelectSpells spells = new();
+    public static FormSelectCharacter character = new();
+    public static FormSelectSpells spells = new();
     public static MusicManager musicManager = new MusicManager();
     public static MusicManager effectsManager = new MusicManager();
-    public static FormCombat combat = new FormCombat();
+    public static FormCombat combat;
 
     public FormLogin()
     {
         InitializeComponent();
+        this.StartPosition = FormStartPosition.CenterScreen;
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
         this.MaximizeBox = false;
+
 
         // Cargar imagen de fondo
         LoadBackgroundImg();
@@ -133,7 +135,6 @@ public partial class FormLogin : Form
 
     private void StartGame()
     {
-        musicManager?.StopMusic();
         this.Hide();
         startMenu.Show();
     }

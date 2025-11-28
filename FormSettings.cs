@@ -6,6 +6,7 @@ public partial class FormSettings : Form
     public FormSettings()
     {
         InitializeComponent();
+        this.StartPosition = FormStartPosition.CenterScreen;
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
         this.MaximizeBox = false;
     }

@@ -5,6 +5,9 @@ public partial class FormStartMenu : Form
     public FormStartMenu()
     {
         InitializeComponent();
+        this.StartPosition = FormStartPosition.CenterScreen;
+        this.FormBorderStyle = FormBorderStyle.FixedSingle;
+        this.MaximizeBox = false;
     }
 
     private void btnContinuar_Click(object sender, EventArgs e)
@@ -19,7 +22,7 @@ public partial class FormStartMenu : Form
     {
         // Aquí va la lógica para nueva partida
         MessageBox.Show("Nueva partida iniciada...");
-        FormLogin.combat.Show();
+        FormLogin.character.Show();
         this.Close();
     }
 

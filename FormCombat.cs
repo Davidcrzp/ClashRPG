@@ -1,3 +1,5 @@
+using System.Configuration;
+
 namespace ClashRPG;
 
 public partial class FormCombat : Form
@@ -7,6 +9,28 @@ public partial class FormCombat : Form
     private readonly Color CRDeepNavy = Color.FromArgb(27, 35, 82);
     private readonly Color CRGold = Color.FromArgb(255, 204, 0);
     private readonly Color CRWhite = Color.White;
+    public static readonly Dictionary<string, string[]> SelectionSpells = new Dictionary<string, string[]>
+    {
+        { "MAGO", new string[] {"Fuego", "Hielo", "Rayo"} },
+        { "GUERRERO", new string[]{"Espada", "Estocada", "Carga"} },
+        { "MINI P.E.K.K.A.", new string[]{"Pegar", "Pega duro", "Espadazo"} }
+    };
+    public static readonly Dictionary<string, string> SelectionSprite = new Dictionary<string, string>
+    {
+        { "MAGO", @"Assets/Images/Sprites/Mago_Acy_1.png" },
+        { "GUERRERO", @"Assets/Images/Sprites/kni_Acy_1.png" },
+        { "MINI P.E.K.K.A.", @"Assets/Images/Sprites/mpk_Wcy_1-export.png" },
+        { "FURIA", @"Assets\Images\Sprites\furia.png" },
+        { "ENREDADERA", @"Assets\Images\Sprites\enredadera.png" },
+        { "RAYO", @"Assets\Images\Sprites\rayo.png" },
+        { "VENENO", @"Assets\Images\Sprites\veneno.png" },
+        { "CURACIÓN", @"Assets\Images\Sprites\curacion.png" },
+        { "Hechizo Vacio", "" }
+        //"FURIA", "ENREDADERA", "RAYO", "VENENO", "CURACIÓN"
+    };
+    public static string character = "";
+    public static string[] spells = { "Hechizo Vacio", "Hechizo Vacio" };
+    public static int level = 0;
 
     public FormCombat()
     {
@@ -14,6 +38,7 @@ public partial class FormCombat : Form
         this.FormBorderStyle = FormBorderStyle.None;
         ApplyTheme();
         WireEvents();
+        Console.WriteLine(FormCombat.character + " " + FormCombat.spells[0] + " " + FormCombat.spells[1]);
     }
 
     private void ApplyTheme()
@@ -35,7 +60,6 @@ public partial class FormCombat : Form
 
         StyleImageButton(btnImg1);
         StyleImageButton(btnImg2);
-        StyleImageButton(btnImg3);
 
         btnConfig.BackColor = Color.FromArgb(20, 28, 70);
         btnConfig.FlatAppearance.BorderColor = CRGold;
@@ -80,9 +104,8 @@ public partial class FormCombat : Form
         btnAtk2.Click += (s, e) => ShowToast("Ataque 2 ejecutado");
         btnAtk3.Click += (s, e) => ShowToast("Ataque 3 ejecutado");
 
-        btnImg1.Click += (s, e) => ShowToast("Botón imagen 1");
-        btnImg2.Click += (s, e) => ShowToast("Botón imagen 2");
-        btnImg3.Click += (s, e) => ShowToast("Botón imagen 3");
+        btnImg1.Click += (s, e) => ShowToast("Hechizo vacio");
+        btnImg2.Click += (s, e) => ShowToast("Hechizo vacio");
     }
 
     private void BtnConfig_Paint(object sender, PaintEventArgs e)
@@ -115,5 +138,10 @@ public partial class FormCombat : Form
             t.Dispose();
         };
         t.Start();
+    }
+
+    private void btnConfig_Click(object sender, EventArgs e)
+    {
+        FormLogin.settings.Show();
     }
 }
