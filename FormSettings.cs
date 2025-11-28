@@ -45,4 +45,10 @@ public partial class FormSettings : Form
     {
         return comboResolution.SelectedItem.ToString();
     }
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        this.Hide();
+        e.Cancel = true;
+    }
 }

@@ -2,8 +2,8 @@ namespace ClashRPG;
 
 public partial class FormLogin : Form
 {
-    private Login login;
-    private FormStartMenu startMenu;
+    private Login login = new Login();
+    private FormStartMenu startMenu = new FormStartMenu();
     public static FormSettings settings = new FormSettings();
     public static MusicManager musicManager = new MusicManager();
     public static MusicManager effectsManager = new MusicManager();
@@ -23,9 +23,8 @@ public partial class FormLogin : Form
         map.LoadMap(setResolution);
         map.Show();
 
-        // Inicializar managers
-        login = new Login();
-        startMenu = new FormStartMenu();
+        var combat = new FormCombat();
+        combat.Show();
 
         // Cargar imagen de fondo
         LoadBackgroundImg();
