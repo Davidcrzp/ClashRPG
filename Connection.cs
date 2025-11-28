@@ -1,38 +1,41 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
+using System.Windows.Forms;
 
-namespace ClashRPG;
-
-public class Conexion
+namespace ClashRPG
 {
-    private string connectionString;
-
-    public Conexion()
+    public class Conexion
     {
-        this.connectionString = @"Server=localhost;Database=base de datos;Uid=root;Pwd=;";
-    }
+        private string connectionString;
 
-    public bool ProbarConexion()
-    {
-        try
+        public Conexion()
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            this.connectionString = @"Server=localhost;Database=base de datos;Uid=root;Pwd=;";
+        }
+
+        public bool ProbarConexion()
+        {
+            try
             {
-                connection.Open();
-                MessageBox.Show("¡Conexión exitosa a 'base de datos'!");
-                return true;
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    MessageBox.Show("¡Conexión exitosa a 'base de datos'!");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error de conexión: {ex.Message}");
+                return false;
             }
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error de conexión: {ex.Message}");
-            return false;
-        }
-    }
 
-    public MySqlConnection ObtenerConexion()
-    {
-        MySqlConnection connection = new MySqlConnection(connectionString);
-        connection.Open();
-        return connection;
+        public MySqlConnection ObtenerConexion()
+        {
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            return connection;
+        }
     }
 }

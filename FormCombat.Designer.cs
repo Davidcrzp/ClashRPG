@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -87,17 +88,17 @@ namespace ClashRPG
             this.btnConfig.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             this.btnConfig.Text = "";
 
-            // picA (bajado un poco)
-            this.picA.Location = new Point(22, 120); // antes 100
+            // picA
+            this.picA.Location = new Point(22, 120);
             this.picA.Size = new Size(380, 200);
 
-            // picB (más a la derecha y alineado con picA)
-            this.picB.Location = new Point(440, 30); // antes 420
+            // picB
+            this.picB.Location = new Point(440, 30);
             this.picB.Size = new Size(380, 200);
 
-            // lblDescripcion (bajada un poco)
+            // lblDescripcion
             this.lblDescripcion.AutoSize = false;
-            this.lblDescripcion.Location = new Point(22, 360); // antes 300
+            this.lblDescripcion.Location = new Point(22, 360);
             this.lblDescripcion.Size = new Size(640, 80);
             this.lblDescripcion.Text = "Descripción del combate...";
             this.lblDescripcion.Font = new Font("Segoe UI", 10F);
@@ -125,9 +126,8 @@ namespace ClashRPG
             this.btnAtk3.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 
             // Botones Imagen (alineados con picB)
-            // Botones Imagen (alineados justo debajo de picB)
-            int rightX = this.picB.Left + (this.picB.Width / 2) + 40; // centrados respecto al recuadro
-            int startY = this.picB.Bottom + 20; // un margen de 20px debajo del recuadro
+            int rightX = this.picB.Left + (this.picB.Width / 2) + 40;
+            int startY = this.picB.Bottom + 20;
 
             this.btnImg1.Text = "Img 1";
             this.btnImg1.Size = new Size(140, 90);
@@ -136,14 +136,13 @@ namespace ClashRPG
 
             this.btnImg2.Text = "Img 2";
             this.btnImg2.Size = new Size(140, 90);
-            this.btnImg2.Location = new Point(rightX, startY + 100); // 100px más abajo
+            this.btnImg2.Location = new Point(rightX, startY + 100);
             this.btnImg2.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
 
             this.btnImg3.Text = "Img 3";
             this.btnImg3.Size = new Size(140, 90);
-            this.btnImg3.Location = new Point(rightX, startY + 200); // 200px más abajo
+            this.btnImg3.Location = new Point(rightX, startY + 200);
             this.btnImg3.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-
 
             // lblStatus
             this.lblStatus.AutoSize = true;
@@ -173,7 +172,53 @@ namespace ClashRPG
 
             this.Controls.Add(this.lblStatus);
 
+            // Event handlers
+            this.btnAtk1.Click += BtnAtk1_Click;
+            this.btnAtk2.Click += BtnAtk2_Click;
+            this.btnAtk3.Click += BtnAtk3_Click;
+
             this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
+        private void BtnAtk1_Click(object sender, EventArgs e)
+        {
+            ProbarCombate("Mago", 1, 5); // valores de prueba
+        }
+
+        private void BtnAtk2_Click(object sender, EventArgs e)
+        {
+            ProbarCombate("Caballero", 2, 3); // valores de prueba
+        }
+
+        private void BtnAtk3_Click(object sender, EventArgs e)
+        {
+            ProbarCombate("Minipekka", 3, 4); // valores de prueba
+        }
+
+        // 🔹 Método auxiliar para probar CombateService
+        private void ProbarCombate(string nombrePersonaje, int idMonstruo, int idAtaque)
+        {
+            CombatService combate = new CombatService();
+            string resultado = combate.EjecutarTurno(nombrePersonaje, idMonstruo, idAtaque);
+
+            lblDescripcion.Text = resultado;   // muestra resultado en el label
+            lblStatus.Visible = true;
+            lblStatus.Text = $"Último ataque: {nombrePersonaje} contra monstruo {idMonstruo}";
+        }
+
+        private void btnProbarCombate_Click(object sender, EventArgs e)
+        {
+            var combate = new CombatService();
+
+            // 🔹 Valores de prueba (ajusta según tu BD)
+            string nombrePersonaje = "Mago";
+            int idMonstruo = 1;
+            int idAtaque = 7;
+
+            string resultado = combate.EjecutarTurno(nombrePersonaje, idMonstruo, idAtaque);
+
+            MessageBox.Show(resultado, "Resultado del combate");
         }
     }
 }
