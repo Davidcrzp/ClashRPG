@@ -4,22 +4,16 @@ public partial class FormLogin : Form
 {
     private Login login = new Login();
     private FormStartMenu startMenu = new FormStartMenu();
-    public static FormSettings settings = new FormSettings();
+    public static FormSettings set = new FormSettings();
     public static MusicManager musicManager = new MusicManager();
     public static MusicManager effectsManager = new MusicManager();
-    public static FormMap map = new FormMap();
-    public static string setResolution = "";
+    public static FormCombat combat = new FormCombat();
 
     public FormLogin()
     {
         InitializeComponent();
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
         this.MaximizeBox = false;
-
-        setResolution = settings.getResolution();
-
-        var combat = new FormCombat();
-        combat.Show();
 
         // Cargar imagen de fondo
         LoadBackgroundImg();
@@ -28,7 +22,7 @@ public partial class FormLogin : Form
         CenterLogin();
 
         // REPRODUCIR MÚSICA AL INICIAR
-        musicManager.PlayMusic();
+        LoadMusic();
     }
 
     private void LoadBackgroundImg()
@@ -52,6 +46,11 @@ public partial class FormLogin : Form
             MessageBox.Show($"Error cargando fondo: {ex.Message}");
             pictureBoxFondo.BackColor = Color.LightGray;
         }
+    }
+
+    private void LoadMusic()
+    {
+        musicManager.PlayMusic();
     }
 
     private void CenterLogin()
@@ -122,7 +121,12 @@ public partial class FormLogin : Form
 
     private void btnSettings_Click(object sender, EventArgs e)
     {
-        settings.Show();
+        set.Show();
+    }
+
+    public static void Volume(float vol)
+    {
+        musicManager.Volume(vol);
     }
 
     private void StartGame()
@@ -130,14 +134,5 @@ public partial class FormLogin : Form
         musicManager?.StopMusic();
         this.Hide();
         startMenu.Show();
-    }
-
-    public static void ReloadMap()
-    {
-        map.Dispose();
-        map = new FormMap();
-        setResolution = settings.getResolution();
-        map.LoadMap(setResolution);
-        map.Show();
     }
 }

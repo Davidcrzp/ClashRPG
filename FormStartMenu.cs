@@ -11,9 +11,7 @@ public partial class FormStartMenu : Form
     {
         // Aquí va la lógica para continuar partida
         MessageBox.Show("Continuar partida...");
-        FormLogin.map = new FormMap();
-        FormLogin.map.LoadMap(FormLogin.setResolution);
-        FormLogin.map.Show();
+        FormLogin.combat.Show();
         this.Close();
     }
 
@@ -21,9 +19,7 @@ public partial class FormStartMenu : Form
     {
         // Aquí va la lógica para nueva partida
         MessageBox.Show("Nueva partida iniciada...");
-        FormLogin.map = new FormMap();
-        FormLogin.map.LoadMap(FormLogin.setResolution);
-        FormLogin.map.Show();
+        FormLogin.combat.Show();
         this.Close();
     }
 
