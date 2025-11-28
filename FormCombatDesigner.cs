@@ -130,17 +130,17 @@ namespace ClashRPG
             int startY = this.picB.Bottom + 20; // un margen de 20px debajo del recuadro
 
             this.btnImg1.Text = "Img 1";
-            this.btnImg1.Size = new Size(80, 80);
+            this.btnImg1.Size = new Size(140, 90);
             this.btnImg1.Location = new Point(rightX, startY);
             this.btnImg1.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
 
             this.btnImg2.Text = "Img 2";
-            this.btnImg2.Size = new Size(80, 80);
+            this.btnImg2.Size = new Size(140, 90);
             this.btnImg2.Location = new Point(rightX, startY + 100); // 100px más abajo
             this.btnImg2.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
 
             this.btnImg3.Text = "Img 3";
-            this.btnImg3.Size = new Size(80, 80);
+            this.btnImg3.Size = new Size(140, 90);
             this.btnImg3.Location = new Point(rightX, startY + 200); // 200px más abajo
             this.btnImg3.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
 
