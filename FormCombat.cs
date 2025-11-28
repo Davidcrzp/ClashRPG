@@ -85,7 +85,7 @@ public partial class FormCombat : Form
         btnImg3.Click += (s, e) => ShowToast("Botón imagen 3");
     }
 
-    private void BtnConfig_Paint(object sender, PaintEventArgs e)
+    private void BtnConfig_Paint(object? sender, PaintEventArgs e)
     {
         var g = e.Graphics;
         g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
