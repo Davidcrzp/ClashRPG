@@ -23,27 +23,45 @@ namespace ClashRPG
             return _database.GetCollection<BsonDocument>("notas");
         }
 
-        // 🎯 MÉTODO ÚNICO QUE NECESITAS AGREGAR
-        public async Task<bool> CrearNotaPartidaFinalizada(int idPartida, int idPersonaje, string nombrePersonaje, int duracionSegundos)
+        // 🎯 MÉTODO SIMPLIFICADO CON VICTORIA/DERROTA
+        public async Task<bool> CrearNotaPartidaFinalizada(
+            int idPartida,
+            int idPersonaje,
+            int duracionSegundos,
+            bool victoria,                    // true = ganó, false = perdió
+            string motivoFin = "")            // razón del fin de partida
         {
             try
             {
                 var collection = NotasCollection();
+
+                string resultadoTexto = victoria ? "🏆 VICTORIA" : "💀 DERROTA";
+                string emoji = victoria ? "🎉" : "😔";
+                string notaCompleta = $"{emoji} {resultadoTexto} - Partida #{idPartida} - " +
+                                      $"Duración: {TimeSpan.FromSeconds(duracionSegundos):mm\\:ss}";
+
+                // Agregar motivo si existe
+                if (!string.IsNullOrEmpty(motivoFin))
+                {
+                    notaCompleta += $" - {motivoFin}";
+                }
 
                 var nota = new BsonDocument
                 {
                     { "tipo", "partida_finalizada" },
                     { "id_partida", idPartida },
                     { "id_personaje", idPersonaje },
-                    { "nombre_personaje", nombrePersonaje },
                     { "duracion_segundos", duracionSegundos },
+                    { "victoria", victoria },
+                    { "resultado", resultadoTexto },
+                    { "motivo_fin", motivoFin },
                     { "fecha_finalizacion", DateTime.Now },
-                    { "nota", $"🎮 Partida #{idPartida} finalizada - Personaje: {nombrePersonaje} - Duración: {TimeSpan.FromSeconds(duracionSegundos):mm\\:ss}" },
+                    { "nota", notaCompleta },
                     { "fecha_registro", DateTime.Now }
                 };
 
                 await collection.InsertOneAsync(nota);
-                Console.WriteLine($"✅ Nota de partida #{idPartida} guardada en MongoDB");
+                Console.WriteLine($"✅ Nota de partida #{idPartida} guardada - {resultadoTexto}");
                 return true;
             }
             catch (Exception ex)
@@ -54,5 +72,6 @@ namespace ClashRPG
         }
     }
 }
+
 
 
