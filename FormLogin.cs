@@ -4,7 +4,9 @@ public partial class FormLogin : Form
 {
     private Login login = new Login();
     private FormStartMenu startMenu = new FormStartMenu();
-    public static FormSettings set = new FormSettings();
+    public static FormSettings settings = new FormSettings();
+    FormSelectCharacter character = new();
+    FormSelectSpells spells = new();
     public static MusicManager musicManager = new MusicManager();
     public static MusicManager effectsManager = new MusicManager();
     public static FormCombat combat = new FormCombat();
@@ -121,7 +123,7 @@ public partial class FormLogin : Form
 
     private void btnSettings_Click(object sender, EventArgs e)
     {
-        set.Show();
+        settings.Show();
     }
 
     public static void Volume(float vol)
