@@ -17,6 +17,7 @@ public partial class FormCombat : Form
     };
     public static readonly Dictionary<string, string> SelectionSprite = new Dictionary<string, string>
     {
+        //"FURIA", "ENREDADERA", "RAYO", "VENENO", "CURACIÓN"
         { "MAGO", @"Assets/Images/Sprites/Mago_Acy_1.png" },
         { "GUERRERO", @"Assets/Images/Sprites/kni_Acy_1.png" },
         { "MINI P.E.K.K.A.", @"Assets/Images/Sprites/mpk_Wcy_1-export.png" },
@@ -26,11 +27,18 @@ public partial class FormCombat : Form
         { "VENENO", @"Assets\Images\Sprites\veneno.png" },
         { "CURACIÓN", @"Assets\Images\Sprites\curacion.png" },
         { "Hechizo Vacio", "" }
-        //"FURIA", "ENREDADERA", "RAYO", "VENENO", "CURACIÓN"
+    };
+    public static readonly Dictionary<int, string> LevelEnemy = new Dictionary<int, string>
+    {
+        { 1, @"Assets\Images\Sprites\ske_Acy_1.png" },
+        { 2, @"Assets\Images\Sprites\gob_Acy_1-export.png" },
+        { 3, @"Assets\Images\Sprites\gigEi1.png" },
+        { 4, @"Assets\Images\Sprites\gigda1.png" },
+        { 5, @"Assets\Images\Sprites\reinad_Icy_1.png" }
     };
     public static string character = "";
     public static string[] spells = { "Hechizo Vacio", "Hechizo Vacio" };
-    public static int level = 0;
+    public static int level = 1;
 
     public FormCombat()
     {

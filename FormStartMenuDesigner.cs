@@ -5,7 +5,6 @@ partial class FormStartMenu
     private System.ComponentModel.IContainer components = null;
     private Label lblTitulo;
     private PictureBox picLogo;
-    private Button btnContinuar;
     private Button btnNuevaPartida;
     private Button btnSalir;
 
@@ -22,7 +21,6 @@ partial class FormStartMenu
     {
         this.lblTitulo = new System.Windows.Forms.Label();
         this.picLogo = new System.Windows.Forms.PictureBox();
-        this.btnContinuar = new System.Windows.Forms.Button();
         this.btnNuevaPartida = new System.Windows.Forms.Button();
         this.btnSalir = new System.Windows.Forms.Button();
         ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
@@ -69,15 +67,6 @@ partial class FormStartMenu
             b.FlatAppearance.MouseOverBackColor = esSalir ? System.Drawing.Color.DarkRed : azulHover;
         }
 
-        // Botón Continuar
-        this.btnContinuar.Location = new System.Drawing.Point(230, 380);
-        this.btnContinuar.Name = "btnContinuar";
-        this.btnContinuar.Size = new System.Drawing.Size(320, 55);
-        this.btnContinuar.TabIndex = 2;
-        this.btnContinuar.Text = "Continuar";
-        EstiloBoton(this.btnContinuar);
-        this.btnContinuar.Click += new System.EventHandler(this.btnContinuar_Click);
-
         // Botón Nueva Partida
         this.btnNuevaPartida.Location = new System.Drawing.Point(230, 445);
         this.btnNuevaPartida.Name = "btnNuevaPartida";
@@ -102,7 +91,6 @@ partial class FormStartMenu
         this.ClientSize = new System.Drawing.Size(784, 591);
         this.Controls.Add(this.btnSalir);
         this.Controls.Add(this.btnNuevaPartida);
-        this.Controls.Add(this.btnContinuar);
         this.Controls.Add(this.picLogo);
         this.Controls.Add(this.lblTitulo);
         this.Name = "FormStartMenu";

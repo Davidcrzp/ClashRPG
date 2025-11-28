@@ -94,6 +94,7 @@ namespace ClashRPG
             // picB (más a la derecha y alineado con picA)
             this.picB.Location = new Point(440, 30); // antes 420
             this.picB.Size = new Size(380, 200);
+            this.picB.Image = Image.FromFile(FormCombat.LevelEnemy[FormCombat.level]);
 
             // lblDescripcion (bajada un poco)
             this.lblDescripcion.AutoSize = false;

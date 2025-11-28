@@ -23,7 +23,7 @@ public class Login
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_usuario", usuario);
-                    command.Parameters.AddWithValue("@p_contraseña", contraseña);
+                    command.Parameters.AddWithValue("@p_contrasenia", contraseña);
 
                     int result = command.ExecuteNonQuery();
                     return result > 0;
@@ -53,7 +53,7 @@ public class Login
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_usuario", usuario);
-                    command.Parameters.AddWithValue("@p_contraseña", contraseña);
+                    command.Parameters.AddWithValue("@p_contrasenia", contraseña);
 
                     int count = Convert.ToInt32(command.ExecuteScalar());
                     return count > 0;
