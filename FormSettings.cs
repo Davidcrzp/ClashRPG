@@ -1,35 +1,17 @@
+using System;
+using System.Windows.Forms;
+
 namespace ClashRPG;
 
-public partial class FormSettings : Form
+public partial class FormOpciones : Form
 {
-    private bool exit = false;
-    public FormSettings()
+    public FormOpciones()
     {
         InitializeComponent();
-        this.FormBorderStyle = FormBorderStyle.FixedSingle;
-        this.MaximizeBox = false;
 
-        if (comboResolution.SelectedItem != null)
-            lblResolution.Text = $"Resolución: {comboResolution.SelectedItem}";
-    }
-
-    private void btnGuardar_Click(object sender, EventArgs e)
-    {
-        FormLogin.musicManager.Volume((float)trackBarVolumenMusica.Value / 100);
-        FormLogin.effectsManager.Volume((float)trackBarVolumenEfectos.Value / 100);
-        if (FormLogin.setResolution != comboResolution.SelectedItem.ToString())
-            FormLogin.ReloadMap();
-    }
-
-    private void btnCerrar_Click(object sender, EventArgs e)
-    {
-        this.Close();
-    }
-
-    private void btnSalir_Click(object sender, EventArgs e)
-    {
-        exit = true;
-        Application.Exit();
+        // Mostrar valores iniciales
+        lblVolumenEfectos.Text = $"Volumen efectos: {trackBarVolumenEfectos.Value}%";
+        lblVolumenMusica.Text = $"Volumen música: {trackBarVolumenMusica.Value}%";
     }
 
     private void trackBarVolumenEfectos_Scroll(object sender, EventArgs e)
@@ -42,23 +24,13 @@ public partial class FormSettings : Form
         lblVolumenMusica.Text = $"Volumen música: {trackBarVolumenMusica.Value}%";
     }
 
-    private void comboResolution_SelectedIndexChanged(object sender, EventArgs e)
+    private void btnGuardar_Click(object sender, EventArgs e)
     {
-        if (comboResolution.SelectedItem != null)
-            lblResolution.Text = $"Resolución: {comboResolution.SelectedItem}";
+        MessageBox.Show("Configuración guardada.", "Opciones", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
-    public string getResolution()
+    private void btnCancelar_Click(object sender, EventArgs e)
     {
-        return comboResolution.SelectedItem.ToString();
-    }
-
-    protected override void OnFormClosing(FormClosingEventArgs e)
-    {
-        if (!exit)
-        {
-            this.Hide();
-            e.Cancel = true;
-        }
+        this.Close();
     }
 }
