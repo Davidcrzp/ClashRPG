@@ -25,7 +25,9 @@ public partial class FormMap : Form
         int tamH = heightScreen / 24; // tamaño del botón (cuadrado)
         int cols = widthScreen / tamW;
         int rows = heightScreen / tamH;
-
+        Button btn1 = new Button();
+        btn1.Click += new EventHandler(this.Click1);
+        this.Controls.Add(btn1);
         for (int y = 0; y < 2; y++)
         {
             for (int x = 0; x < cols - 2; x++)
@@ -36,6 +38,7 @@ public partial class FormMap : Form
                 btn.Margin = new Padding(0);
                 btn.FlatStyle = FlatStyle.Popup;
                 btn.BackColor = Color.LightGray;
+                btn.Text = AsciiMaps.maps[AsciiMaps.mapIndex][y, x].ToString();
 
                 this.Controls.Add(btn);
             }
@@ -45,11 +48,19 @@ public partial class FormMap : Form
         btnSettings.Size = new Size(tamW * 2, tamH * 2);
         btnSettings.Location = new Point((cols - 2) * tamW, 0);
         btnSettings.Text = "≡";
-        btnSettings.Font = new Font(btnSettings.Font.FontFamily, 36F, btnSettings.Font.Style);
-        Console.WriteLine(Convert.ToInt32(FormLogin.setResolution[1]) / 2 + 10);
-        btnSettings.Margin = new Padding(0);
-        btnSettings.FlatStyle = FlatStyle.Popup;
-        btnSettings.BackColor = Color.LightGray;
+        btnSettings.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+
+        // Colores estilo Clash Royale
+        var azulBoton = Color.FromArgb(20, 90, 200);
+        var azulHover = Color.FromArgb(35, 120, 230);
+        var dorado = Color.FromArgb(255, 204, 0);
+
+        btnSettings.FlatStyle = FlatStyle.Flat;
+        btnSettings.FlatAppearance.BorderSize = 3;
+        btnSettings.FlatAppearance.BorderColor = dorado;
+        btnSettings.ForeColor = Color.White;
+        btnSettings.BackColor = azulBoton;
+        btnSettings.FlatAppearance.MouseOverBackColor = azulHover;
         btnSettings.Click += new EventHandler(this.btnSettings_Click);
 
         this.Controls.Add(btnSettings);
@@ -64,6 +75,7 @@ public partial class FormMap : Form
                 btn.Margin = new Padding(0);
                 btn.FlatStyle = FlatStyle.Popup;
                 btn.BackColor = Color.LightGray;
+                btn.Text = AsciiMaps.maps[AsciiMaps.mapIndex][y, x].ToString();
 
                 this.Controls.Add(btn);
             }
@@ -73,6 +85,11 @@ public partial class FormMap : Form
     private void btnSettings_Click(object? sender, EventArgs e)
     {
         FormLogin.settings.Show();
+    }
+
+    private void Click1(object? sender, EventArgs e)
+    {
+        AsciiMaps.mapIndex = (AsciiMaps.mapIndex + 1) % 7;
     }
 }
 

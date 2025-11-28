@@ -18,6 +18,9 @@ public partial class FormLogin : Form
 
         setResolution = settings.getResolution();
 
+        var combat = new FormCombat();
+        combat.Show();
+
         // Cargar imagen de fondo
         LoadBackgroundImg();
 
@@ -115,6 +118,11 @@ public partial class FormLogin : Form
             MessageBox.Show("Usuario registrado!");
             StartGame();
         }
+    }
+
+    private void btnSettings_Click(object sender, EventArgs e)
+    {
+        settings.Show();
     }
 
     private void StartGame()

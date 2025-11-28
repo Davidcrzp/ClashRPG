@@ -18,6 +18,7 @@ namespace ClashRPG
 
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnCerrar;
+        private System.Windows.Forms.Button btnSalir;
 
         protected override void Dispose(bool disposing)
         {
@@ -48,6 +49,7 @@ namespace ClashRPG
 
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnCerrar = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
 
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).BeginInit();
@@ -147,6 +149,13 @@ namespace ClashRPG
             this.btnCerrar.ForeColor = System.Drawing.Color.White;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
 
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.Location = new System.Drawing.Point(20, 330); // esquina inferior izquierda
+            this.btnSalir.Size = new System.Drawing.Size(100, 40);
+            this.btnSalir.BackColor = System.Drawing.Color.Black;
+            this.btnSalir.ForeColor = System.Drawing.Color.White;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+
             // =============================
             // AGREGAR TODO AL FORM
             // =============================
@@ -154,6 +163,7 @@ namespace ClashRPG
             this.Controls.Add(this.groupPantalla);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnCerrar);
+            this.Controls.Add(this.btnSalir);
 
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).EndInit();

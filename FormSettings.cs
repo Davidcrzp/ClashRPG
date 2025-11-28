@@ -2,6 +2,7 @@ namespace ClashRPG;
 
 public partial class FormSettings : Form
 {
+    private bool exit = false;
     public FormSettings()
     {
         InitializeComponent();
@@ -23,6 +24,12 @@ public partial class FormSettings : Form
     private void btnCerrar_Click(object sender, EventArgs e)
     {
         this.Close();
+    }
+
+    private void btnSalir_Click(object sender, EventArgs e)
+    {
+        exit = true;
+        Application.Exit();
     }
 
     private void trackBarVolumenEfectos_Scroll(object sender, EventArgs e)
@@ -48,7 +55,10 @@ public partial class FormSettings : Form
 
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
-        this.Hide();
-        e.Cancel = true;
+        if (!exit)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }
     }
 }
