@@ -17,14 +17,6 @@ public partial class FormLogin : Form
         this.MaximizeBox = false;
 
         setResolution = settings.getResolution();
-        settings.Show();
-
-        map = new FormMap();
-        map.LoadMap(setResolution);
-        map.Show();
-
-        var combat = new FormCombat();
-        combat.Show();
 
         // Cargar imagen de fondo
         LoadBackgroundImg();
