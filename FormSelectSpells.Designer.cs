@@ -90,7 +90,7 @@ partial class FormSelectSpells
 
             // Recuadro negro en lugar de imagen
             imagenes[i] = CrearImagen();
-            imagenes[i].Image = Image.FromFile(@"Assets\Images\Background\" + archivos[i]);
+            imagenes[i].Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\" + archivos[i]);
             slot.Controls.Add(imagenes[i]);
 
             descripciones[i] = CrearTextoDescripcion(textos[i]);

@@ -33,7 +33,7 @@ public partial class FormLogin : Form
     {
         try
         {
-            string rutaFondo = @"Assets\Images\Background\Login.png";
+            string rutaFondo = @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Login.png";
 
             if (File.Exists(rutaFondo))
             {
@@ -137,5 +137,11 @@ public partial class FormLogin : Form
     {
         this.Hide();
         startMenu.Show();
+    }
+
+    public static void NextLvl(FormCombat form)
+    {
+        form = new FormCombat();
+        form.Show();
     }
 }

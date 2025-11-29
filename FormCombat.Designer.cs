@@ -135,12 +135,14 @@ namespace ClashRPG
             this.btnImg1.Location = new Point(rightX, startY + 100); // 100px más abajo
             this.btnImg1.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             this.btnImg1.Image = Image.FromFile(FormCombat.SelectionSprite[FormCombat.spells[0]]);
+            this.btnImg1.Click += new EventHandler(this.btnImg1_Click);
 
             this.btnImg2.Text = FormCombat.spells[1];
             this.btnImg2.Size = new Size(140, 90);
             this.btnImg2.Location = new Point(rightX, startY + 200); // 200px más abajo
             this.btnImg2.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             this.btnImg2.Image = Image.FromFile(FormCombat.SelectionSprite[FormCombat.spells[1]]);
+            this.btnImg2.Click += new EventHandler(this.btnImg2_Click);
 
             // lblStatus
             this.lblStatus.AutoSize = true;

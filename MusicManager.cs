@@ -13,7 +13,7 @@ public class MusicManager : IDisposable
     {
         try
         {
-            string themePath = @"Assets\Sounds\Music\Theme.mp3";
+            string themePath = @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Sounds\Music\Theme.mp3";
             if (File.Exists(themePath))
             {
                 // Detener música anterior si está reproduciéndose
