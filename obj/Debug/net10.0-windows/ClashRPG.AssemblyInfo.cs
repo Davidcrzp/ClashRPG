@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ClashRPG")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f073f1100fc9037a1737a868047c35911f1346a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b9f4b778f61cf2345d4b503baf7c2fe13a5d5ea9")]
 [assembly: System.Reflection.AssemblyProductAttribute("ClashRPG")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ClashRPG")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
