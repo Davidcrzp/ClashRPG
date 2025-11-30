@@ -32,7 +32,7 @@ partial class FormLogin
         this.btnRegistrar = new Button();
         this.label1 = new Label();
         this.label2 = new Label();
-        this.btnSettings = new Button(); // ← AGREGADO
+        this.btnSettings = new Button();
 
         ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFondo)).BeginInit();
         this.panelLogin.SuspendLayout();

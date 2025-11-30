@@ -1,124 +1,126 @@
-namespace ClashRPG;
-
-partial class FormOpciones
+namespace ClashRPG
 {
-    private System.ComponentModel.IContainer components = null;
-
-    private System.Windows.Forms.GroupBox groupSonido;
-
-    private System.Windows.Forms.TrackBar trackBarVolumenEfectos;
-    private System.Windows.Forms.TrackBar trackBarVolumenMusica;
-
-    private System.Windows.Forms.Label lblVolumenEfectos;
-    private System.Windows.Forms.Label lblVolumenMusica;
-
-    private System.Windows.Forms.Button btnGuardar;
-    private System.Windows.Forms.Button btnCancelar;
-
-    protected override void Dispose(bool disposing)
+    partial class FormSettings
     {
-        if (disposing && (components != null))
-            components.Dispose();
-        base.Dispose(disposing);
-    }
+        private System.ComponentModel.IContainer components = null;
 
-    private void InitializeComponent()
-    {
-        var azulFondo = System.Drawing.Color.FromArgb(0, 31, 63);
-        var azulClaro = System.Drawing.Color.FromArgb(0, 91, 187);
-        var dorado = System.Drawing.Color.FromArgb(255, 215, 0);
-        var grisPiedra = System.Drawing.Color.FromArgb(46, 46, 46);
+        private System.Windows.Forms.GroupBox groupSonido;
 
-        this.groupSonido = new System.Windows.Forms.GroupBox();
+        private System.Windows.Forms.TrackBar trackBarVolumenEfectos;
+        private System.Windows.Forms.TrackBar trackBarVolumenMusica;
 
-        this.trackBarVolumenEfectos = new System.Windows.Forms.TrackBar();
-        this.trackBarVolumenMusica = new System.Windows.Forms.TrackBar();
+        private System.Windows.Forms.Label lblVolumenEfectos;
+        private System.Windows.Forms.Label lblVolumenMusica;
 
-        this.lblVolumenEfectos = new System.Windows.Forms.Label();
-        this.lblVolumenMusica = new System.Windows.Forms.Label();
+        private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.Button btnSalir;
 
-        this.btnGuardar = new System.Windows.Forms.Button();
-        this.btnCancelar = new System.Windows.Forms.Button();
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+            base.Dispose(disposing);
+        }
 
-        ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).BeginInit();
-        ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).BeginInit();
+        private void InitializeComponent()
+        {
+            // Colores Clash Royale
+            var azulFondo = System.Drawing.Color.FromArgb(0, 31, 63);
+            var azulClaro = System.Drawing.Color.FromArgb(0, 91, 187);
+            var dorado = System.Drawing.Color.FromArgb(255, 215, 0);
+            var grisPiedra = System.Drawing.Color.FromArgb(46, 46, 46);
 
-        // ===============================
-        // FORM GENERAL
-        // ===============================
-        this.BackColor = azulFondo;
-        this.ForeColor = dorado;
-        this.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-        this.ClientSize = new System.Drawing.Size(500, 280);
-        this.Text = "Opciones - Clash Royale Style";
+            this.groupSonido = new System.Windows.Forms.GroupBox();
 
-        // ===============================
-        // GRUPO DE SONIDO
-        // ===============================
-        this.groupSonido.Text = "Configuración de sonido";
-        this.groupSonido.Location = new System.Drawing.Point(20, 20);
-        this.groupSonido.Size = new System.Drawing.Size(450, 150);
-        this.groupSonido.BackColor = grisPiedra;
-        this.groupSonido.ForeColor = dorado;
+            this.trackBarVolumenEfectos = new System.Windows.Forms.TrackBar();
+            this.trackBarVolumenMusica = new System.Windows.Forms.TrackBar();
 
-        // --- Etiqueta Volumen Efectos ---
-        this.lblVolumenEfectos.Location = new System.Drawing.Point(20, 30);
-        this.lblVolumenEfectos.Text = "Volumen efectos: 50%";
-        this.lblVolumenEfectos.AutoSize = true;
+            this.lblVolumenEfectos = new System.Windows.Forms.Label();
+            this.lblVolumenMusica = new System.Windows.Forms.Label();
 
-        // --- Trackbar Volumen Efectos ---
-        this.trackBarVolumenEfectos.Location = new System.Drawing.Point(20, 60);
-        this.trackBarVolumenEfectos.Maximum = 100;
-        this.trackBarVolumenEfectos.Value = 50;
-        this.trackBarVolumenEfectos.TickFrequency = 10;
-        this.trackBarVolumenEfectos.Scroll += new System.EventHandler(this.trackBarVolumenEfectos_Scroll);
+            this.btnGuardar = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
 
-        // --- Etiqueta Volumen Música ---
-        this.lblVolumenMusica.Location = new System.Drawing.Point(240, 30);
-        this.lblVolumenMusica.Text = "Volumen música: 50%";
-        this.lblVolumenMusica.AutoSize = true;
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).BeginInit();
 
-        // --- Trackbar Volumen Música ---
-        this.trackBarVolumenMusica.Location = new System.Drawing.Point(240, 60);
-        this.trackBarVolumenMusica.Maximum = 100;
-        this.trackBarVolumenMusica.Value = 50;
-        this.trackBarVolumenMusica.TickFrequency = 10;
-        this.trackBarVolumenMusica.Scroll += new System.EventHandler(this.trackBarVolumenMusica_Scroll);
+            // =============================
+            // ESTILO GENERAL DEL FORM
+            // =============================
+            this.BackColor = azulFondo;
+            this.ForeColor = dorado;
+            this.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.ClientSize = new System.Drawing.Size(500, 300);
+            this.Text = "Configuración - Clash RPG";
 
-        this.groupSonido.Controls.Add(this.lblVolumenEfectos);
-        this.groupSonido.Controls.Add(this.trackBarVolumenEfectos);
-        this.groupSonido.Controls.Add(this.lblVolumenMusica);
-        this.groupSonido.Controls.Add(this.trackBarVolumenMusica);
+            // =============================
+            // GRUPO SONIDO
+            // =============================
+            this.groupSonido.Text = "Configuración de sonido";
+            this.groupSonido.Location = new System.Drawing.Point(20, 20);
+            this.groupSonido.Size = new System.Drawing.Size(450, 170);
+            this.groupSonido.BackColor = grisPiedra;
+            this.groupSonido.ForeColor = dorado;
 
-        // ===============================
-        // BOTÓN GUARDAR
-        // ===============================
-        this.btnGuardar.Text = "Guardar";
-        this.btnGuardar.Location = new System.Drawing.Point(260, 200);
-        this.btnGuardar.Size = new System.Drawing.Size(100, 40);
-        this.btnGuardar.BackColor = azulClaro;
-        this.btnGuardar.ForeColor = System.Drawing.Color.White;
-        this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            // --- Etiqueta Volumen Efectos ---
+            this.lblVolumenEfectos.Location = new System.Drawing.Point(20, 30);
+            this.lblVolumenEfectos.Text = "Volumen efectos: 50%";
+            this.lblVolumenEfectos.AutoSize = true;
 
-        // ===============================
-        // BOTÓN CANCELAR
-        // ===============================
-        this.btnCancelar.Text = "Cancelar";
-        this.btnCancelar.Location = new System.Drawing.Point(370, 200);
-        this.btnCancelar.Size = new System.Drawing.Size(100, 40);
-        this.btnCancelar.BackColor = System.Drawing.Color.DarkRed;
-        this.btnCancelar.ForeColor = System.Drawing.Color.White;
-        this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // --- Trackbar Volumen Efectos ---
+            this.trackBarVolumenEfectos.Location = new System.Drawing.Point(20, 60);
+            this.trackBarVolumenEfectos.Maximum = 100;
+            this.trackBarVolumenEfectos.Value = 50;
+            this.trackBarVolumenEfectos.TickFrequency = 10;
+            this.trackBarVolumenEfectos.Scroll += new System.EventHandler(this.trackBarVolumenEfectos_Scroll);
 
-        // ===============================
-        // AGREGAR CONTROLES
-        // ===============================
-        this.Controls.Add(this.groupSonido);
-        this.Controls.Add(this.btnGuardar);
-        this.Controls.Add(this.btnCancelar);
+            // --- Etiqueta Volumen Música ---
+            this.lblVolumenMusica.Location = new System.Drawing.Point(20, 100);
+            this.lblVolumenMusica.Text = "Volumen música: 50%";
+            this.lblVolumenMusica.AutoSize = true;
 
-        ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).EndInit();
-        ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).EndInit();
-        this.ResumeLayout(false);
+            // --- Trackbar Volumen Música ---
+            this.trackBarVolumenMusica.Location = new System.Drawing.Point(20, 130);
+            this.trackBarVolumenMusica.Maximum = 100;
+            this.trackBarVolumenMusica.Value = 50;
+            this.trackBarVolumenMusica.TickFrequency = 10;
+            this.trackBarVolumenMusica.Scroll += new System.EventHandler(this.trackBarVolumenMusica_Scroll);
+
+            this.groupSonido.Controls.Add(this.lblVolumenEfectos);
+            this.groupSonido.Controls.Add(this.trackBarVolumenEfectos);
+            this.groupSonido.Controls.Add(this.lblVolumenMusica);
+            this.groupSonido.Controls.Add(this.trackBarVolumenMusica);
+
+            // =============================
+            // BOTÓN GUARDAR
+            // =============================
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.Location = new System.Drawing.Point(190, 210);
+            this.btnGuardar.Size = new System.Drawing.Size(115, 40);
+            this.btnGuardar.BackColor = azulClaro;
+            this.btnGuardar.ForeColor = System.Drawing.Color.White;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+
+            // =============================
+            // BOTÓN SALIR
+            // =============================
+            this.btnSalir.Text = "Salir del juego";
+            this.btnSalir.Location = new System.Drawing.Point(300, 210);
+            this.btnSalir.Size = new System.Drawing.Size(190, 40);
+            this.btnSalir.BackColor = System.Drawing.Color.DarkRed;
+            this.btnSalir.ForeColor = System.Drawing.Color.White;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+
+            // =============================
+            // AGREGAR TODO AL FORM
+            // =============================
+            this.Controls.Add(this.groupSonido);
+            this.Controls.Add(this.btnGuardar);
+            this.Controls.Add(this.btnSalir);
+
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenEfectos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVolumenMusica)).EndInit();
+            this.ResumeLayout(false);
+        }
     }
 }

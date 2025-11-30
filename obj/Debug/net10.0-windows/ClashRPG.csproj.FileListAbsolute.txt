@@ -34,3 +34,9 @@ C:\Users\ferow\Downloads\ClashRPG\ClashRPG\obj\Debug\net10.0-windows\refint\Clas
 C:\Users\ferow\Downloads\ClashRPG\ClashRPG\obj\Debug\net10.0-windows\ClashRPG.pdb
 C:\Users\ferow\Downloads\ClashRPG\ClashRPG\obj\Debug\net10.0-windows\ClashRPG.genruntimeconfig.cache
 C:\Users\ferow\Downloads\ClashRPG\ClashRPG\obj\Debug\net10.0-windows\ref\ClashRPG.dll
+C:\Users\ferow\Downloads\ClashRPG\ClashRPG\bin\Debug\net10.0-windows\DnsClient.dll
+C:\Users\ferow\Downloads\ClashRPG\ClashRPG\bin\Debug\net10.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\ferow\Downloads\ClashRPG\ClashRPG\bin\Debug\net10.0-windows\MongoDB.Bson.dll
+C:\Users\ferow\Downloads\ClashRPG\ClashRPG\bin\Debug\net10.0-windows\MongoDB.Driver.dll
+C:\Users\ferow\Downloads\ClashRPG\ClashRPG\bin\Debug\net10.0-windows\SharpCompress.dll
+C:\Users\ferow\Downloads\ClashRPG\ClashRPG\bin\Debug\net10.0-windows\Snappier.dll

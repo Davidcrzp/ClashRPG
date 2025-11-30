@@ -1,9 +1,6 @@
-using System.Windows.Forms;
-using System.Drawing;
-
 namespace ClashRPG;
 
-partial class FormElecPer
+partial class FormSelectCharacter
 {
     private PictureBox imgMago;
     private PictureBox imgGuerrero;
@@ -93,7 +90,7 @@ partial class FormElecPer
         contenido.Controls.Add(panelMago);
 
         imgMago = CrearImagen();
-        imgMago.Image = Image.FromFile("Assets/Images/Sprites/Mago.png");  
+        imgMago.Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Mago.png");
         slotMago.Controls.Add(imgMago);
 
         lblMago = CrearTextoDescripcion("MAGO\n\nPoder místico a distancia. Hechizos devastadores.");
@@ -109,7 +106,7 @@ partial class FormElecPer
         contenido.Controls.Add(panelMiniPekka);
 
         imgMiniPekka = CrearImagen();
-        imgMiniPekka.Image = Image.FromFile("Assets/Images/Sprites/Mini_pekka.png");  
+        imgMiniPekka.Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Minipekka.png");
         slotPekka.Controls.Add(imgMiniPekka);
 
         lblMiniPekka = CrearTextoDescripcion("MINI P.E.K.K.A\n\nGolpes extremadamente poderosos.");
@@ -125,7 +122,7 @@ partial class FormElecPer
         contenido.Controls.Add(panelGuerrero);
 
         imgGuerrero = CrearImagen();
-        imgGuerrero.Image = Image.FromFile("Assets/Images/Sprites/Caballero.png");
+        imgGuerrero.Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Caballero.png");
         slotGuerrero.Controls.Add(imgGuerrero);
 
         lblGuerrero = CrearTextoDescripcion("GUERRERO\n\nFuerza y resistencia en combate cuerpo a cuerpo.");

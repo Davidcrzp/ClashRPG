@@ -1,17 +1,31 @@
-using System;
-using System.Windows.Forms;
-
 namespace ClashRPG;
 
-public partial class FormOpciones : Form
+public partial class FormSettings : Form
 {
-    public FormOpciones()
+    private bool exit = false;
+    public FormSettings()
     {
         InitializeComponent();
+        this.StartPosition = FormStartPosition.CenterScreen;
+        this.FormBorderStyle = FormBorderStyle.FixedSingle;
+        this.MaximizeBox = false;
+    }
 
-        // Mostrar valores iniciales
-        lblVolumenEfectos.Text = $"Volumen efectos: {trackBarVolumenEfectos.Value}%";
-        lblVolumenMusica.Text = $"Volumen música: {trackBarVolumenMusica.Value}%";
+    private void btnGuardar_Click(object sender, EventArgs e)
+    {
+        FormLogin.musicManager.Volume((float)trackBarVolumenMusica.Value / 100);
+        FormLogin.effectsManager.Volume((float)trackBarVolumenEfectos.Value / 100);
+    }
+
+    private void btnCerrar_Click(object sender, EventArgs e)
+    {
+        this.Close();
+    }
+
+    private void btnSalir_Click(object sender, EventArgs e)
+    {
+        exit = true;
+        Application.Exit();
     }
 
     private void trackBarVolumenEfectos_Scroll(object sender, EventArgs e)
@@ -24,13 +38,12 @@ public partial class FormOpciones : Form
         lblVolumenMusica.Text = $"Volumen música: {trackBarVolumenMusica.Value}%";
     }
 
-    private void btnGuardar_Click(object sender, EventArgs e)
+    protected override void OnFormClosing(FormClosingEventArgs e)
     {
-        MessageBox.Show("Configuración guardada.", "Opciones", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    }
-
-    private void btnCancelar_Click(object sender, EventArgs e)
-    {
-        this.Close();
+        if (!exit)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }
     }
 }

@@ -5,21 +5,19 @@ public partial class FormLogin : Form
     private Login login = new Login();
     private FormStartMenu startMenu = new FormStartMenu();
     public static FormSettings settings = new FormSettings();
+    public static FormSelectCharacter character = new();
+    public static FormSelectSpells spells = new();
     public static MusicManager musicManager = new MusicManager();
     public static MusicManager effectsManager = new MusicManager();
-    public static FormMap map = new FormMap();
-    public static string setResolution = "";
+    public static FormCombat combat;
 
     public FormLogin()
     {
         InitializeComponent();
+        this.StartPosition = FormStartPosition.CenterScreen;
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
         this.MaximizeBox = false;
 
-        setResolution = settings.getResolution();
-
-        var combat = new FormCombat();
-        combat.Show();
 
         // Cargar imagen de fondo
         LoadBackgroundImg();
@@ -28,14 +26,14 @@ public partial class FormLogin : Form
         CenterLogin();
 
         // REPRODUCIR MÚSICA AL INICIAR
-        musicManager.PlayMusic();
+        LoadMusic();
     }
 
     private void LoadBackgroundImg()
     {
         try
         {
-            string rutaFondo = @"Assets\Images\Background\Login.png";
+            string rutaFondo = @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Login.png";
 
             if (File.Exists(rutaFondo))
             {
@@ -52,6 +50,11 @@ public partial class FormLogin : Form
             MessageBox.Show($"Error cargando fondo: {ex.Message}");
             pictureBoxFondo.BackColor = Color.LightGray;
         }
+    }
+
+    private void LoadMusic()
+    {
+        musicManager.PlayMusic();
     }
 
     private void CenterLogin()
@@ -125,19 +128,20 @@ public partial class FormLogin : Form
         settings.Show();
     }
 
+    public static void Volume(float vol)
+    {
+        musicManager.Volume(vol);
+    }
+
     private void StartGame()
     {
-        musicManager?.StopMusic();
         this.Hide();
         startMenu.Show();
     }
 
-    public static void ReloadMap()
+    public static void NextLvl(FormCombat form)
     {
-        map.Dispose();
-        map = new FormMap();
-        setResolution = settings.getResolution();
-        map.LoadMap(setResolution);
-        map.Show();
+        form = new FormCombat();
+        form.Show();
     }
 }

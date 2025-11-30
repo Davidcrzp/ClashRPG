@@ -1,9 +1,6 @@
-using System.Drawing;
-using System.Windows.Forms;
-
 namespace ClashRPG;
 
-partial class FormElecHechizo
+partial class FormSelectSpells
 {
     private Label lblTitulo;
     private Button btnConfig;
@@ -79,6 +76,7 @@ partial class FormElecHechizo
             "VENENO\n\nSe inflinge daño al enemigo durante toda la batalla.",
             "CURACIÓN\n\nRecupera vida."
         };
+        string[] archivos = { "Furia.png", "Enredadera.png", "Rayo.png", "Veneno.png", "Curacion.png" };
 
         int panelY = 100;
         int panelX = 60;
@@ -92,6 +90,7 @@ partial class FormElecHechizo
 
             // Recuadro negro en lugar de imagen
             imagenes[i] = CrearImagen();
+            imagenes[i].Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\" + archivos[i]);
             slot.Controls.Add(imagenes[i]);
 
             descripciones[i] = CrearTextoDescripcion(textos[i]);
@@ -182,4 +181,3 @@ partial class FormElecHechizo
         return b;
     }
 }
-

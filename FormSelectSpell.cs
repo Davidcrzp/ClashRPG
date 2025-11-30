@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-
 namespace ClashRPG;
 
-public partial class FormElecHechizo : Form
+public partial class FormSelectSpells : Form
 {
     private List<string> hechizosSeleccionados = new List<string>();
 
-    public FormElecHechizo()
+    public FormSelectSpells()
     {
         InitializeComponent();
+        this.StartPosition = FormStartPosition.CenterScreen;
+        this.FormBorderStyle = FormBorderStyle.None;
     }
 
     private void Hechizo_Click(object sender, EventArgs e)
@@ -50,7 +47,17 @@ public partial class FormElecHechizo : Form
         else
         {
             string seleccion = string.Join(", ", hechizosSeleccionados);
+            if (hechizosSeleccionados.Count == 1) FormCombat.spells[0] = hechizosSeleccionados[0];
+            else
+            {
+                FormCombat.spells[0] = hechizosSeleccionados[0];
+                FormCombat.spells[1] = hechizosSeleccionados[1];
+            }
+
             MessageBox.Show("Has seleccionado: " + seleccion);
         }
+        this.Hide();
+        FormLogin.combat = new FormCombat();
+        FormLogin.combat.Show();
     }
 }
