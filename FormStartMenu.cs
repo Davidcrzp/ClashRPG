@@ -14,7 +14,7 @@ public partial class FormStartMenu : Form
     {
         // Aquí va la lógica para nueva partida
         MessageBox.Show("Nueva partida iniciada...");
-        FormLogin.character.Show();
+        Global.selectCharacter.Show();
         this.Close();
     }
 

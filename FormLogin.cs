@@ -1,15 +1,12 @@
+using System.Data;
+using MySql.Data.MySqlClient;
+
 namespace ClashRPG;
 
 public partial class FormLogin : Form
 {
+    private Global global = new Global();
     private Login login = new Login();
-    private FormStartMenu startMenu = new FormStartMenu();
-    public static FormSettings settings = new FormSettings();
-    public static FormSelectCharacter character = new();
-    public static FormSelectSpells spells = new();
-    public static MusicManager musicManager = new MusicManager();
-    public static MusicManager effectsManager = new MusicManager();
-    public static FormCombat combat;
 
     public FormLogin()
     {
@@ -18,10 +15,6 @@ public partial class FormLogin : Form
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
         this.MaximizeBox = false;
 
-
-        // Cargar imagen de fondo
-        LoadBackgroundImg();
-
         // Centrar el panel de login
         CenterLogin();
 
@@ -29,32 +22,9 @@ public partial class FormLogin : Form
         LoadMusic();
     }
 
-    private void LoadBackgroundImg()
-    {
-        try
-        {
-            string rutaFondo = @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Login.png";
-
-            if (File.Exists(rutaFondo))
-            {
-                pictureBoxFondo.Image = Image.FromFile(rutaFondo);
-            }
-            else
-            {
-                // Si no encuentra la imagen, crear fondo de color
-                pictureBoxFondo.BackColor = Color.LightGray;
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error cargando fondo: {ex.Message}");
-            pictureBoxFondo.BackColor = Color.LightGray;
-        }
-    }
-
     private void LoadMusic()
     {
-        musicManager.PlayMusic();
+        //Global.musicManager.PlayMusic();
     }
 
     private void CenterLogin()
@@ -78,8 +48,8 @@ public partial class FormLogin : Form
     // Detener música cuando se cierre el formulario
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
-        musicManager.Dispose();
-        effectsManager.Dispose();
+        Global.musicManager.Dispose();
+        Global.effectsManager.Dispose();
         base.OnFormClosing(e);
     }
 
@@ -125,18 +95,36 @@ public partial class FormLogin : Form
 
     private void btnSettings_Click(object sender, EventArgs e)
     {
-        settings.Show();
+        Global.settings.Show();
     }
 
     public static void Volume(float vol)
     {
-        musicManager.Volume(vol);
+        Global.musicManager.Volume(vol);
     }
 
     private void StartGame()
     {
+        try
+        {
+            using (MySqlConnection connection = Global.conexion.ObtenerConexion())
+            {
+                using (MySqlCommand command = new MySqlCommand("sp_iniciarPartida", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_nombreUsuario", txtUsuario.Text);
+
+                    command.ExecuteScalar();
+                }
+            }
+        }
+        catch (System.Exception e)
+        {
+            MessageBox.Show($"Error conectando a la base de datos: {e.Message}");
+            throw e;
+        }
         this.Hide();
-        startMenu.Show();
+        Global.startMenu.Show();
     }
 
     public static void NextLvl(FormCombat form)

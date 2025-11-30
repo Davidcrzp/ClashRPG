@@ -44,20 +44,19 @@ public partial class FormSelectSpells : Form
         {
             MessageBox.Show("No seleccionaste ningún hechizo. Continuando...");
         }
+        else if (hechizosSeleccionados.Count == 1)
+        {
+            Global.idSpells[0] = Global.spellsId[hechizosSeleccionados[0]];
+        }
         else
         {
-            string seleccion = string.Join(", ", hechizosSeleccionados);
-            if (hechizosSeleccionados.Count == 1) FormCombat.spells[0] = hechizosSeleccionados[0];
-            else
-            {
-                FormCombat.spells[0] = hechizosSeleccionados[0];
-                FormCombat.spells[1] = hechizosSeleccionados[1];
-            }
+            Global.idSpells[0] = Global.spellsId[hechizosSeleccionados[0]];
+            Global.idSpells[1] = Global.spellsId[hechizosSeleccionados[1]];
 
-            MessageBox.Show("Has seleccionado: " + seleccion);
+            MessageBox.Show("Has seleccionado: " + hechizosSeleccionados[0] + ", " + hechizosSeleccionados[1]);
         }
         this.Hide();
-        FormLogin.combat = new FormCombat();
-        FormLogin.combat.Show();
+        Global.combat = new FormCombat();
+        Global.combat.Show();
     }
 }

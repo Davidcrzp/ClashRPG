@@ -64,13 +64,13 @@ namespace ClashRPG
 
             // lblTitulo
             this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Text = FormCombat.character;
+            this.lblTitulo.Text = CharacterNameAttackAndSprite[Global.idCharacter][0];
             this.lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             this.lblTitulo.Location = new Point(20, 14);
 
             // lblNivel
             this.lblNivel.AutoSize = true;
-            this.lblNivel.Text = "Nivel " + FormCombat.level;
+            this.lblNivel.Text = "Nivel " + round;
             this.lblNivel.Font = new Font("Segoe UI", 12F, FontStyle.Regular);
             this.lblNivel.Location = new Point(22, 54);
 
@@ -89,12 +89,11 @@ namespace ClashRPG
             // picA (bajado un poco)
             this.picA.Location = new Point(22, 120); // antes 100
             this.picA.Size = new Size(380, 200);
-            this.picA.Image = Image.FromFile(FormCombat.SelectionSprite[FormCombat.character]);
+            this.picA.Image = Image.FromFile(CharacterNameAttackAndSprite[Global.idCharacter][4]);
 
             // picB (más a la derecha y alineado con picA)
             this.picB.Location = new Point(440, 30); // antes 420
             this.picB.Size = new Size(380, 200);
-            this.picB.Image = Image.FromFile(FormCombat.LevelEnemy[FormCombat.level]);
 
             // lblDescripcion (bajada un poco)
             this.lblDescripcion.AutoSize = false;
@@ -110,17 +109,17 @@ namespace ClashRPG
             int spacing = 40;
             int baseY = this.ClientSize.Height - btnH - 30;
 
-            this.btnAtk1.Text = FormCombat.SelectionSpells[FormCombat.character][0];
+            this.btnAtk1.Text = CharacterNameAttackAndSprite[Global.idCharacter][1];
             this.btnAtk1.Size = new Size(btnW, btnH);
             this.btnAtk1.Location = new Point(margin, baseY);
             this.btnAtk1.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 
-            this.btnAtk2.Text = FormCombat.SelectionSpells[FormCombat.character][1];
+            this.btnAtk2.Text = CharacterNameAttackAndSprite[Global.idCharacter][2];
             this.btnAtk2.Size = new Size(btnW, btnH);
             this.btnAtk2.Location = new Point(margin + (btnW + spacing), baseY);
             this.btnAtk2.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 
-            this.btnAtk3.Text = FormCombat.SelectionSpells[FormCombat.character][2];
+            this.btnAtk3.Text = CharacterNameAttackAndSprite[Global.idCharacter][3];
             this.btnAtk3.Size = new Size(btnW, btnH);
             this.btnAtk3.Location = new Point(margin + 2 * (btnW + spacing), baseY);
             this.btnAtk3.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
@@ -130,19 +129,19 @@ namespace ClashRPG
             int rightX = this.picB.Left + (this.picB.Width / 2) + 40; // centrados respecto al recuadro
             int startY = this.picB.Bottom + 20; // un margen de 20px debajo del recuadro
 
-            this.btnImg1.Text = FormCombat.spells[0];
+            this.btnImg1.Text = SpellNameAndSprite[Global.idSpells[0]][0] + ": " + Global.chargeSpells[0];
             this.btnImg1.Size = new Size(140, 90);
             this.btnImg1.Location = new Point(rightX, startY + 100); // 100px más abajo
             this.btnImg1.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnImg1.Image = Image.FromFile(FormCombat.SelectionSprite[FormCombat.spells[0]]);
-            this.btnImg1.Click += new EventHandler(this.btnImg1_Click);
+            if (Global.idSpells[0] != 0)
+                this.btnImg1.Image = Image.FromFile(SpellNameAndSprite[Global.idSpells[0]][1]);
 
-            this.btnImg2.Text = FormCombat.spells[1];
+            this.btnImg2.Text = SpellNameAndSprite[Global.idSpells[1]][0] + ": " + Global.chargeSpells[1];
             this.btnImg2.Size = new Size(140, 90);
             this.btnImg2.Location = new Point(rightX, startY + 200); // 200px más abajo
             this.btnImg2.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnImg2.Image = Image.FromFile(FormCombat.SelectionSprite[FormCombat.spells[1]]);
-            this.btnImg2.Click += new EventHandler(this.btnImg2_Click);
+            if (Global.idSpells[1] != 0)
+                this.btnImg2.Image = Image.FromFile(SpellNameAndSprite[Global.idSpells[1]][1]);
 
             // lblStatus
             this.lblStatus.AutoSize = true;

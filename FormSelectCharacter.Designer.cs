@@ -3,19 +3,19 @@ namespace ClashRPG;
 partial class FormSelectCharacter
 {
     private PictureBox imgMago;
-    private PictureBox imgGuerrero;
+    private PictureBox imgCaballero;
     private PictureBox imgMiniPekka;
 
     private Button btnMago;
-    private Button btnGuerrero;
+    private Button btnCaballero;
     private Button btnMiniPekka;
 
     private Label lblMago;
-    private Label lblGuerrero;
+    private Label lblCaballero;
     private Label lblMiniPekka;
 
     private Panel panelMago;
-    private Panel panelGuerrero;
+    private Panel panelCaballero;
     private Panel panelMiniPekka;
 
     private Label lblTitulo;
@@ -90,7 +90,7 @@ partial class FormSelectCharacter
         contenido.Controls.Add(panelMago);
 
         imgMago = CrearImagen();
-        imgMago.Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Mago.png");
+        imgMago.Image = Image.FromFile(@"Assets\Images\Background\Mago.png");
         slotMago.Controls.Add(imgMago);
 
         lblMago = CrearTextoDescripcion("MAGO\n\nPoder místico a distancia. Hechizos devastadores.");
@@ -106,7 +106,7 @@ partial class FormSelectCharacter
         contenido.Controls.Add(panelMiniPekka);
 
         imgMiniPekka = CrearImagen();
-        imgMiniPekka.Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Minipekka.png");
+        imgMiniPekka.Image = Image.FromFile(@"Assets\Images\Background\Minipekka.png");
         slotPekka.Controls.Add(imgMiniPekka);
 
         lblMiniPekka = CrearTextoDescripcion("MINI P.E.K.K.A\n\nGolpes extremadamente poderosos.");
@@ -116,21 +116,21 @@ partial class FormSelectCharacter
         btnMiniPekka.Click += this.btnMiniPekka_Click;
         slotPekka.Controls.Add(btnMiniPekka);
 
-        // PANEL 3 - GUERRERO
-        panelGuerrero = CrearPanelConBordeOro(new Point(panelX3, panelY));
-        Panel slotGuerrero = panelGuerrero.Controls[0] as Panel;
-        contenido.Controls.Add(panelGuerrero);
+        // PANEL 3 - Caballero
+        panelCaballero = CrearPanelConBordeOro(new Point(panelX3, panelY));
+        Panel slotCaballero = panelCaballero.Controls[0] as Panel;
+        contenido.Controls.Add(panelCaballero);
 
-        imgGuerrero = CrearImagen();
-        imgGuerrero.Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Caballero.png");
-        slotGuerrero.Controls.Add(imgGuerrero);
+        imgCaballero = CrearImagen();
+        imgCaballero.Image = Image.FromFile(@"Assets\Images\Background\Caballero.png");
+        slotCaballero.Controls.Add(imgCaballero);
 
-        lblGuerrero = CrearTextoDescripcion("GUERRERO\n\nFuerza y resistencia en combate cuerpo a cuerpo.");
-        slotGuerrero.Controls.Add(lblGuerrero);
+        lblCaballero = CrearTextoDescripcion("CABALLERO\n\nFuerza y resistencia en combate cuerpo a cuerpo.");
+        slotCaballero.Controls.Add(lblCaballero);
 
-        btnGuerrero = CrearBoton();
-        btnGuerrero.Click += this.btnGuerrero_Click;
-        slotGuerrero.Controls.Add(btnGuerrero);
+        btnCaballero = CrearBoton();
+        btnCaballero.Click += this.btnCaballero_Click;
+        slotCaballero.Controls.Add(btnCaballero);
     }
 
     // =====================================

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using DnsClient.Protocol;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Bcpg;
 
 namespace ClashRPG
 {
@@ -15,51 +17,36 @@ namespace ClashRPG
         private readonly Color CRGold = Color.FromArgb(255, 204, 0);
         private readonly Color CRWhite = Color.White;
 
-        // Diccionario de hechizos por personaje
-        public static readonly Dictionary<string, string[]> SelectionSpells = new Dictionary<string, string[]>
+        // Diccionario de personaje
+        public readonly Dictionary<int, string[]> CharacterNameAttackAndSprite = new Dictionary<int, string[]>
         {
-            { "MAGO", new string[] {"Fireball", "escudo de fuego", "showtime"} },
-            { "GUERRERO", new string[]{"estocada", "defensa", "corte fuerte"} },
-            { "MINI P.E.K.K.A.", new string[]{"aña", "pancake", "enojarse"} }
+            { 1, new string[] {"Mago", "Bola de fuego", "Escudo de fuego", "Showtime", @"Assets\Images\Sprites\Mago_Acy_1.png"} },
+            { 2, new string[] {"Mini P.E.K.K.A.", "Aña", "Pancakes", "Enojarse", @"Assets\Images\Sprites\mpk_Wcy_1-export.png"} },
+            { 3, new string[] {"Caballero", "Estocada", "Defensa", "Corte fuerte", @"Assets\Images\Sprites\kni_Wcy_1.png"} }
         };
 
-        // Diccionario de sprites
-        public static readonly Dictionary<string, string> SelectionSprite = new Dictionary<string, string>
-        {
-            { "MAGO", @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\Mago_Acy_1.png" },
-            { "GUERRERO", @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\kni_Wcy_1.png" },
-            { "MINI P.E.K.K.A.", @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\mpk_Wcy_1-export.png" },
-            { "FURIA", @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\furia.png" },
-            { "ENREDADERA", @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\enredadera.png" },
-            { "RAYO", @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\rayo.png" },
-            { "VENENO", @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\veneno.png" },
-            { "CURACIÓN", @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\curacion.png" },
-            { "Hechizo Vacio", "" }
+        // Diccionario de hechizos
+        public readonly Dictionary<int, string[]> SpellNameAndSprite = new Dictionary<int, string[]>{
+            { 1, new string[] {"Furia", @"Assets\Images\Sprites\furia.png"} },
+            { 2, new string[] {"Enredadera", @"Assets\Images\Sprites\enredadera.png"} },
+            { 3, new string[] {"Rayo", @"Assets\Images\Sprites\rayo.png"} },
+            { 4, new string[] {"Veneno", @"Assets\Images\Sprites\veneno.png"} },
+            { 5, new string[] {"Curacion", @"Assets\Images\Sprites\curacion.png"} },
+            { 0, new string[] {"Hechizo Vacio"} }
         };
 
-        // Diccionario de enemigos por nivel
-        public static readonly Dictionary<int, string> LevelEnemy = new Dictionary<int, string>
+        // Diccionario de enemigo
+        public readonly Dictionary<int, string[]> MonsterNameAndSprite = new Dictionary<int, string[]>
         {
-            { 1, @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\ske_Acy_1.png" },
-            { 2, @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\gob_Acy_1-export.png" },
-            { 3, @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\gigEi1.png" },
-            { 4, @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\gigda1.png" },
-            { 5, @"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Sprites\reinad_Icy_1.png" }
+            { 1, new string[] {"Esqueleto", @"Assets\Images\Sprites\ske_Acy_1.png"} },
+            { 2, new string[] {"Goblin", @"Assets\Images\Sprites\gob_Acy_1-export.png"} },
+            { 3, new string[] {"Gigante Esqueleto", @"Assets\Images\Sprites\gigEi1.png"} },
+            { 4, new string[] {"Gigante Goblin", @"Assets\Images\Sprites\gigda1.png"} },
+            { 5, new string[] {"Reina Goblin", @"Assets\Images\Sprites\reinad_Icy_1.png"} }
         };
 
-        // Diccionario de IDs de personajes
-        public static readonly Dictionary<string, int> CharacterIds = new Dictionary<string, int>
-        {
-            { "GUERRERO", 1 },
-            { "MINI P.E.K.K.A.", 2 },
-            { "MAGO", 3 }
-        };
-
-        // Variables globales
-        public static string character = "";
-        public static string[] spells = { "Hechizo Vacio", "Hechizo Vacio" };
-        public static int level = 1;
-        public static int idPersonajeActual = 0;
+        private int round = 1;
+        private bool turn = true;
 
         public FormCombat()
         {
@@ -68,233 +55,206 @@ namespace ClashRPG
             ApplyTheme();
             WireEvents();
 
-            using var conn = new MySql.Data.MySqlClient.MySqlConnection("Server=localhost;Database=base de datos;Uid=root;Pwd=;");
-            Conexion conexion = new Conexion();
-            using (MySqlConnection connection = conexion.ObtenerConexion())
+            Console.WriteLine(CharacterNameAttackAndSprite[Global.idCharacter][0] + " " + SpellNameAndSprite[Global.idSpells[0]][0] + " " + SpellNameAndSprite[Global.idSpells[1]][0]);
+            NextRound();
+            UpdateForm();
+            ShowToast("Tu Turno");
+        }
+
+        private void UpdateForm()
+        {
+            EnableBtn();
+            UpdateText();
+        }
+
+        private void NextRound()
+        {
+            SelectMonster(round);
+        }
+
+        private void btnAtk_Click(int attack)
+        {
+            Console.WriteLine(attack);
+            if (Global.effect == 1)
             {
-                using (MySqlCommand command = new MySqlCommand("sp_ReiniciarTodo", connection))
+                ShowToast("Estas aturdido");
+                Thread.Sleep(1000);
+                Global.effect = 0;
+                return;
+            }
+            if (attack == 1)
+            {
+                AnimateCharacter(attack);
+                // SQL ATAQUE 1
+                int damage = 5; // DAÑO EJEMPLO
+                Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+                Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
+                // if (Global.effectEnemy == 0) Global.effectEnemy = 1; // EFECTO EJEMPLO
+                // else if (Global.effectEnemy == 1) Global.effectEnemy = 0;
+
+                ShowToast(CharacterNameAttackAndSprite[Global.idCharacter][attack] + ". " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
+            }
+            else if (attack == 2)
+            {
+                AnimateCharacter(attack);
+                // SQL ATAQUE 2
+                int damage = 10; // DAÑO EJEMPLO
+                Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+                Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
+                // if (Global.effectEnemy == 0) Global.effectEnemy = 1; // EFECTO EJEMPLO
+                // else if (Global.effectEnemy == 1) Global.effectEnemy = 0;
+
+                ShowToast(CharacterNameAttackAndSprite[Global.idCharacter][attack] + ". " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
+
+            }
+            else if (attack == 3)
+            {
+                AnimateCharacter(attack);
+                // SQL ATAQUE 3
+                int damage = 15; // DAÑO EJEMPLO
+                Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+                Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
+                // if (Global.effectEnemy == 0) Global.effectEnemy = 1; // EFECTO EJEMPLO
+                // else if (Global.effectEnemy == 1) Global.effectEnemy = 0;
+
+                ShowToast(CharacterNameAttackAndSprite[Global.idCharacter][attack] + ". " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
+            }
+            else if (attack == 4)
+            {
+                if (Global.idSpells[0] == 0)
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    int result = command.ExecuteNonQuery();
-                }
-            }
-
-
-            // 👉 Llamamos al método asincrónico al abrir el form
-            this.Load += async (s, e) => await FinalizarPartidaAsync();
-
-            Console.WriteLine(FormCombat.character + " " + FormCombat.spells[0] + " " + FormCombat.spells[1]);
-        }
-
-        // MÉTODO ACTUALIZADO PARA PROCESAR BATALLA - AHORA SOLO CON ID
-        public static async Task<Dictionary<string, object>> ProcesarBatallaAsync(int idPersonaje, int idAtaque, int idMonstruo)
-        {
-            var resultado = new Dictionary<string, object>();
-
-            try
-            {
-                using var conn = new MySql.Data.MySqlClient.MySqlConnection("Server=localhost;Database=base de datos;Uid=root;Pwd=;");
-                await conn.OpenAsync();
-
-                using var cmd = new MySql.Data.MySqlClient.MySqlCommand("sp_Batalla", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-                // ✅ PARÁMETROS ACTUALIZADOS - ahora solo usamos IDs
-                cmd.Parameters.AddWithValue("@p_id_personaje", idPersonaje);
-                cmd.Parameters.AddWithValue("@p_id_ataque", idAtaque);
-                cmd.Parameters.AddWithValue("@p_id_monstruo", idMonstruo);
-
-                using var reader = await cmd.ExecuteReaderAsync();
-
-                if (await reader.ReadAsync())
-                {
-                    // Mapear resultados basados en el SELECT final del SP
-                    resultado["resultado"] = reader["resultado"]?.ToString() ?? "";
-                    resultado["danio_personaje"] = reader["danio_personaje"] != DBNull.Value ? Convert.ToInt32(reader["danio_personaje"]) : 0;
-                    resultado["hp_monstruo_restante"] = reader["hp_monstruo_restante"] != DBNull.Value ? Convert.ToInt32(reader["hp_monstruo_restante"]) : 0;
-                    resultado["hp_personaje_restante"] = reader["hp_personaje_restante"] != DBNull.Value ? Convert.ToInt32(reader["hp_personaje_restante"]) : 0;
-                    resultado["mana_personaje"] = reader["mana_personaje"] != DBNull.Value ? Convert.ToInt32(reader["mana_personaje"]) : 0;
-                    resultado["danio_boss"] = reader["danio_boss"] != DBNull.Value ? Convert.ToInt32(reader["danio_boss"]) : 0;
-                    resultado["estado_monstruo"] = reader["estado_monstruo"]?.ToString() ?? "normal";
-                    resultado["aturdido_aplicado"] = reader["aturdido_aplicado"] != DBNull.Value ? Convert.ToBoolean(reader["aturdido_aplicado"]) : false;
-                    resultado["id_partida"] = reader["id_partida"] != DBNull.Value ? Convert.ToInt32(reader["id_partida"]) : 0;
-                    resultado["experiencia_ganada"] = reader["experiencia_ganada"] != DBNull.Value ? Convert.ToInt32(reader["experiencia_ganada"]) : 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                resultado["error"] = ex.Message;
-                Console.WriteLine($"Error en ProcesarBatallaAsync: {ex.Message}");
-            }
-
-            return resultado;
-        }
-
-        // MÉTODO PARA FINALIZAR PARTIDA
-        public static async Task FinalizarPartidaAsync()
-        {
-            using var conn = new MySql.Data.MySqlClient.MySqlConnection("Server=localhost;Database=base de datos;Uid=root;Pwd=;");
-            await conn.OpenAsync();
-
-            using var cmd = new MySql.Data.MySqlClient.MySqlCommand("sp_FinalizarPartida", conn);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@p_id_personaje", idPersonajeActual);
-
-            using var reader = await cmd.ExecuteReaderAsync();
-
-            if (await reader.ReadAsync())
-            {
-                string resultado = reader["resultado"].ToString();
-                int idPartida = Convert.ToInt32(reader["id_partida"]);
-
-                int duracionSegundos = 0;
-                if (resultado.Contains("Duración"))
-                {
-                    var partes = resultado.Split(' ');
-                    int.TryParse(partes[^2], out duracionSegundos);
-                }
-
-                bool victoria = !resultado.Contains("DERROTA");
-                string motivoFin = resultado;
-
-                var mongo = new MongoDB();
-                await mongo.CrearNotaPartidaFinalizada(
-                    idPartida,
-                    idPersonajeActual,
-                    duracionSegundos,
-                    victoria,
-                    motivoFin
-                );
-            }
-        }
-
-        // MÉTODO PARA OBTENER ID DE ATAQUE
-        public static int ObtenerIdAtaque(int idPersonaje, int numeroAtaque)
-        {
-            if (numeroAtaque < 1 || numeroAtaque > 3)
-                return 0;
-
-            var ataquesPorPersonaje = new Dictionary<int, int[]>
-            {
-                { 1, new int[] { 1, 2, 3 } },    // Guerrero: ataques 1,2,3
-                { 2, new int[] { 4, 5, 6 } },    // Mini P.E.K.K.A.: ataques 4,5,6
-                { 3, new int[] { 7, 8, 9 } }     // Mago: ataques 7,8,9
-            };
-
-            if (ataquesPorPersonaje.ContainsKey(idPersonaje))
-            {
-                return ataquesPorPersonaje[idPersonaje][numeroAtaque - 1];
-            }
-
-            return 0;
-        }
-
-        // MÉTODO PARA OBTENER ID DE MONSTRUO SEGÚN NIVEL
-        public static int ObtenerIdMonstruo(int nivel)
-        {
-            return 3; // Siempre el monstruo con ID 3
-        }
-
-        // MÉTODO SIMPLIFICADO PARA MANEJAR ATAQUES
-        private async void ManejarAtaque(int numeroAtaque)
-        {
-            try
-            {
-                // ✅ AHORA DIRECTAMENTE USAMOS idPersonajeActual
-                int idAtaque = ObtenerIdAtaque(idPersonajeActual, numeroAtaque);
-                int idMonstruo = ObtenerIdMonstruo(level);
-
-                if (idAtaque == 0)
-                {
-                    ShowToast("Ataque no válido");
+                    ShowToast("Hechizo no equipado");
                     return;
                 }
-
-                Console.WriteLine($"Ejecutando batalla - Personaje ID: {idPersonajeActual}, Ataque ID: {idAtaque}, Monstruo ID: {idMonstruo}");
-
-                // ✅ LLAMADA SIMPLIFICADA - solo IDs
-                var resultado = await ProcesarBatallaAsync(idPersonajeActual, idAtaque, idMonstruo);
-
-                if (resultado.ContainsKey("error"))
+                if (Global.chargeSpells[0] == 0)
                 {
-                    ShowToast($"Error: {resultado["error"]}");
+                    ShowToast("Hechizo agotado");
                     return;
                 }
+                AnimateCharacter(attack);
+                // SQL ATAQUE 4 CON HECHIZO Y GUARDAS VIDA RESTANTE DE AMBOS, DAÑO REALIZADO Y ESTADO
+                int damage = 5; // DAÑO EJEMPLO
+                Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+                Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
+                if (Global.effectEnemy == 0) Global.effectEnemy = 1; // VIDA RESTANTE EJEMPLO
+                else if (Global.effectEnemy == 1) Global.effectEnemy = 0;
+                Global.chargeSpells[0]--;
 
-                // Procesar resultado
-                string mensajeResultado = resultado["resultado"].ToString();
-                int danioInfligido = (int)resultado["danio_personaje"];
-                int hpMonstruoRestante = (int)resultado["hp_monstruo_restante"];
-                int hpPersonajeRestante = (int)resultado["hp_personaje_restante"];
-                int manaPersonaje = (int)resultado["mana_personaje"];
-                bool aturdido = (bool)resultado["aturdido_aplicado"];
-
-                string mensajeUsuario = $"{mensajeResultado}";
-                if (danioInfligido > 0)
-                {
-                    mensajeUsuario += $"\nDaño infligido: {danioInfligido}";
-                }
-                if (aturdido)
-                {
-                    mensajeUsuario += "\n¡MONSTRUO ATURDIDO!";
-                }
-
-                ShowToast(mensajeUsuario);
-                ActualizarInterfazUsuario(hpPersonajeRestante, hpMonstruoRestante, manaPersonaje);
-
-                if (hpMonstruoRestante <= 0)
-                {
-                    ShowToast("¡Monstruo derrotado!");
-                    level++;
-                    MessageBox.Show($"¡HAS GANADO!");
-                    // Aquí podrías actualizar la imagen del monstruo según el nuevo nivel
-                }
-                else if (hpPersonajeRestante <= 0)
-                {
-                    ShowToast("¡Has sido derrotado!");
-                    await FinalizarPartidaAsync();
-                }
+                ShowToast(SpellNameAndSprite[Global.idSpells[0]][0] + " lanzado. " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
             }
-            catch (Exception ex)
+            else if (attack == 5)
             {
-                ShowToast($"Error en la batalla: {ex.Message}");
+                if (Global.idSpells[1] == 0)
+                {
+                    ShowToast("Hechizo no equipado");
+                    return;
+                }
+                if (Global.chargeSpells[0] == 0)
+                {
+                    ShowToast("Hechizo agotado");
+                    return;
+                }
+                AnimateCharacter(attack);
+                // SQL ATAQUE 5 CON HECHIZO
+                int damage = 5; // DAÑO EJEMPLO
+                Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+                Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
+                if (Global.effectEnemy == 0) Global.effectEnemy = 2; // VIDA RESTANTE EJEMPLO
+                else if (Global.effectEnemy == 2) Global.effectEnemy = 0;
+                Global.chargeSpells[1]--;
+
+                ShowToast(SpellNameAndSprite[Global.idSpells[1]][0] + " lanzado! " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
             }
+            Console.WriteLine(CharacterNameAttackAndSprite[Global.idCharacter][attack] + ". " + "Daño realizado: " + 5 + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
+            Thread.Sleep(500);
+
+            turn = !turn;
+
+            UpdateForm();
+            Atk_Enemy();
         }
 
-        // MÉTODO PARA ACTUALIZAR INTERFAZ DE USUARIO
-        private void ActualizarInterfazUsuario(int hpPersonaje, int hpMonstruo, int manaPersonaje)
+        private void Atk_Enemy()
         {
-            Console.WriteLine($"HP Personaje: {hpPersonaje}, HP Monstruo: {hpMonstruo}, Mana: {manaPersonaje}");
-            this.lblDescripcion.Text = $"HP Personaje: {hpPersonaje}, HP Monstruo: {hpMonstruo}, Mana: {manaPersonaje}";
-
-            // Aquí puedes agregar la actualización de tus controles UI:
-            // Ejemplo:
-            // progressBarPlayerHP.Value = hpPersonaje;
-            // progressBarMonsterHP.Value = hpMonstruo;
-            // labelMana.Text = manaPersonaje.ToString();
-            // lblPlayerHP.Text = $"HP: {hpPersonaje}";
-            // lblMonsterHP.Text = $"HP: {hpMonstruo}";
+            if (Global.effect == 1)
+            {
+                ShowToast("Enemigo aturdido");
+                Thread.Sleep(1000);
+                turn = !turn;
+                UpdateForm();
+                return;
+            }
+            ShowToast("Turno enemigo");
+            Thread.Sleep(1000);
+            // SQL ATAQUE ENEMIGO
+            int damage = 5; // DAÑO EJEMPLO
+            Global.life = Global.life - damage; // VIDA RESTANTE EJEMPLO
+            Global.lifeMonster = Global.lifeMonster;  // VIDA RESTANTE EJEMPLO
+            ShowToast("Ataque Enemigo! " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
+            turn = !turn;
+            UpdateForm();
+            return;
         }
 
-        // MÉTODO PARA ASIGNAR PERSONAJE
-        public static void SetCharacter(string personaje)
+        private void btnConfig_Click(object sender, EventArgs e)
         {
-            if (CharacterIds.ContainsKey(personaje))
-            {
-                idPersonajeActual = CharacterIds[personaje];
-                character = personaje;
-                Console.WriteLine($"Personaje elegido: {character}, ID: {idPersonajeActual}");
-            }
-            else
-            {
-                idPersonajeActual = 0;
-                Console.WriteLine("Personaje no válido");
-            }
+            Global.settings.Show();
         }
+
+        private void WireEvents()
+        {
+            btnConfig.Paint += BtnConfig_Paint;
+            btnConfig.Click += (s, e) => ShowToast("Abrir configuración");
+
+            // Conectar los botones de ataque al método simplificado
+            btnAtk1.Click += (s, e) => btnAtk_Click(1);
+            btnAtk2.Click += (s, e) => btnAtk_Click(2);
+            btnAtk3.Click += (s, e) => btnAtk_Click(3);
+
+            btnImg1.Click += (s, e) => btnAtk_Click(4);
+            btnImg2.Click += (s, e) => btnAtk_Click(5);
+        }
+
+        private void FinishGame()
+        {
+            MessageBox.Show("Termino");
+        }
+
+        private void SelectMonster(int roundMonster)
+        {
+            lblNivel.Text = "Nivel " + round;
+            ApplyMonsterSprites(round);
+            // SQL SELECCIONAR MONSTRUO Y ASIGNAR VIDA DE MONSTRUO EN BASE A RONDA
+            Global.lifeMonster = 100;
+        }
+
+        private void ApplyMonsterSprites(int roundMonster)
+        {
+            picB.Image = Image.FromFile(MonsterNameAndSprite[round][1]);
+        }
+
+        private void UpdateText()
+        {
+            lblDescripcion.Text = "Vida: " + Global.life + "                                                                                                          Vida " + MonsterNameAndSprite[round][0] + ": " + Global.lifeMonster + "\n\n";
+            lblDescripcion.Text += "Efectos: " + Global.effectName[Global.effect] + "                                                                                               Efectos: " + Global.effectName[Global.effectEnemy];
+            btnImg2.Text = SpellNameAndSprite[Global.idSpells[0]][0] + ": " + Global.chargeSpells[0];
+            btnImg2.Text = SpellNameAndSprite[Global.idSpells[1]][0] + ": " + Global.chargeSpells[1];
+        }
+
+        private void EnableBtn()
+        {
+            btnAtk1.Enabled = turn;
+            btnAtk2.Enabled = turn;
+            btnAtk3.Enabled = turn;
+            btnImg1.Enabled = turn;
+            btnImg2.Enabled = turn;
+        }
+
 
         // --- MÉTODOS DE ESTILO Y EVENTOS ---
+        private void AnimateCharacter(int attack) { }
+        private void AnimateMonster() { }
+
         private void ApplyTheme()
         {
             this.BackColor = CRDeepNavy;
@@ -349,20 +309,6 @@ namespace ClashRPG
             b.Font = new Font("Segoe UI", 9, FontStyle.Regular);
         }
 
-        private void WireEvents()
-        {
-            btnConfig.Paint += BtnConfig_Paint;
-            btnConfig.Click += (s, e) => ShowToast("Abrir configuración");
-
-            // Conectar los botones de ataque al método simplificado
-            btnAtk1.Click += (s, e) => ManejarAtaque(1);
-            btnAtk2.Click += (s, e) => ManejarAtaque(2);
-            btnAtk3.Click += (s, e) => ManejarAtaque(3);
-
-            btnImg1.Click += (s, e) => ShowToast("Hechizo de " + FormCombat.spells[0] + ": Fallido");
-            btnImg2.Click += (s, e) => ShowToast("Hechizo de " + FormCombat.spells[1] + ": Fallido");
-        }
-
         private void BtnConfig_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -393,21 +339,6 @@ namespace ClashRPG
                 t.Dispose();
             };
             t.Start();
-        }
-
-        private void btnImg1_Click(object sender, EventArgs e)
-        {
-            ShowToast("Hechizo vacio");
-        }
-
-        private void btnImg2_Click(object sender, EventArgs e)
-        {
-            ShowToast("Hechizo vacio");
-        }
-
-        private void btnConfig_Click(object sender, EventArgs e)
-        {
-            FormLogin.settings.Show();
         }
     }
 }

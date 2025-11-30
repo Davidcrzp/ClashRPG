@@ -48,7 +48,7 @@ partial class FormStartMenu
         // ===== CUADRO NEGRO DONDE IRÁ LA IMAGEN =====
         this.picLogo.Location = new System.Drawing.Point(120, 100);
         this.picLogo.Name = "picLogo";
-        this.picLogo.Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\Banner.png");
+        this.picLogo.Image = Image.FromFile(@"Assets\Images\Background\Banner.png");
         this.picLogo.SizeMode = PictureBoxSizeMode.Zoom;
         this.picLogo.Size = new System.Drawing.Size(540, 250);
         this.picLogo.BackColor = System.Drawing.Color.Transparent;   // ⬅ CUADRO NEGRO

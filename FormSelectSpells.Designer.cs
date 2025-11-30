@@ -76,7 +76,7 @@ partial class FormSelectSpells
             "VENENO\n\nSe inflinge daño al enemigo durante toda la batalla.",
             "CURACIÓN\n\nRecupera vida."
         };
-        string[] archivos = { "Furia.png", "Enredadera.png", "Rayo.png", "Veneno.png", "Curacion.png" };
+        string[] archivos = { "furia.png", "enredadera.png", "rayo.png", "veneno.png", "curacion.png" };
 
         int panelY = 100;
         int panelX = 60;
@@ -90,7 +90,7 @@ partial class FormSelectSpells
 
             // Recuadro negro en lugar de imagen
             imagenes[i] = CrearImagen();
-            imagenes[i].Image = Image.FromFile(@"C:\Users\ferow\Downloads\ClashRPG-main\Assets\Images\Background\" + archivos[i]);
+            imagenes[i].Image = Image.FromFile(@"Assets\Images\Sprites\" + archivos[i]);
             slot.Controls.Add(imagenes[i]);
 
             descripciones[i] = CrearTextoDescripcion(textos[i]);

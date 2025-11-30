@@ -46,6 +46,7 @@ partial class FormLogin
         this.pictureBoxFondo.SizeMode = PictureBoxSizeMode.StretchImage;
         this.pictureBoxFondo.TabIndex = 0;
         this.pictureBoxFondo.TabStop = false;
+        pictureBoxFondo.Image = Image.FromFile(@"Assets\Images\Background\Login.png");
 
         // panelLogin
         this.panelLogin.BackColor = Color.FromArgb(240, 240, 240);

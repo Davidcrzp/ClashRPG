@@ -13,8 +13,8 @@ public partial class FormSettings : Form
 
     private void btnGuardar_Click(object sender, EventArgs e)
     {
-        FormLogin.musicManager.Volume((float)trackBarVolumenMusica.Value / 100);
-        FormLogin.effectsManager.Volume((float)trackBarVolumenEfectos.Value / 100);
+        Global.musicManager.Volume((float)trackBarVolumenMusica.Value / 100);
+        Global.effectsManager.Volume((float)trackBarVolumenEfectos.Value / 100);
     }
 
     private void btnCerrar_Click(object sender, EventArgs e)

@@ -5,25 +5,18 @@ namespace ClashRPG;
 
 public class Login
 {
-    private Conexion conexion;
-
-    public Login()
-    {
-        conexion = new Conexion();
-    }
-
     // Registrar nuevo usuario usando SP
     public bool RegistrarUsuario(string usuario, string contraseña)
     {
         try
         {
-            using (MySqlConnection connection = conexion.ObtenerConexion())
+            using (MySqlConnection connection = Global.conexion.ObtenerConexion())
             {
                 using (MySqlCommand command = new MySqlCommand("sp_RegistrarUsuario", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_usuario", usuario);
-                    command.Parameters.AddWithValue("@p_contrasenia", contraseña);
+                    command.Parameters.AddWithValue("@p_contrasena", contraseña);
 
                     int result = command.ExecuteNonQuery();
                     return result > 0;
@@ -47,13 +40,13 @@ public class Login
     {
         try
         {
-            using (MySqlConnection connection = conexion.ObtenerConexion())
+            using (MySqlConnection connection = Global.conexion.ObtenerConexion())
             {
                 using (MySqlCommand command = new MySqlCommand("sp_VerificarLogin", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_usuario", usuario);
-                    command.Parameters.AddWithValue("@p_contrasenia", contraseña);
+                    command.Parameters.AddWithValue("@p_contrasena", contraseña);
 
                     int count = Convert.ToInt32(command.ExecuteScalar());
                     return count > 0;
@@ -72,7 +65,7 @@ public class Login
     {
         try
         {
-            using (MySqlConnection connection = conexion.ObtenerConexion())
+            using (MySqlConnection connection = Global.conexion.ObtenerConexion())
             {
                 using (MySqlCommand command = new MySqlCommand("sp_UsuarioExiste", connection))
                 {
@@ -96,11 +89,11 @@ public class Login
     {
         try
         {
-            using (MySqlConnection connection = conexion.ObtenerConexion())
+            using (MySqlConnection connection = Global.conexion.ObtenerConexion())
             {
                 using (MySqlCommand command = new MySqlCommand("sp_ObtenerIdUsuario", connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure; // ← CORREGIDO
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_usuario", usuario);
 
                     object result = command.ExecuteScalar();

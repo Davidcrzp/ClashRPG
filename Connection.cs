@@ -19,6 +19,7 @@ public class Conexion
             {
                 connection.Open();
                 MessageBox.Show("¡Conexión exitosa a 'base de datos'!");
+                Console.WriteLine("Test");
                 return true;
             }
         }
