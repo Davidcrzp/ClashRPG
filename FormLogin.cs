@@ -24,7 +24,7 @@ public partial class FormLogin : Form
 
     private void LoadMusic()
     {
-        //Global.musicManager.PlayMusic();
+        Global.musicManager.PlayMusic();
     }
 
     private void CenterLogin()
