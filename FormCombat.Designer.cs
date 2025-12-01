@@ -106,11 +106,13 @@ partial class FormCombat : Form
         this.picA.Size = new Size(380, 200);
         this.picA.SizeMode = PictureBoxSizeMode.StretchImage;
         this.picA.Image = Image.FromFile(CharacterNameAttackAndSprite[Global.idCharacter][4]);
+        this.picA.SendToBack();
 
         // picB
         this.picB.Location = new Point(440, 30);
         this.picB.Size = new Size(380, 200);
         this.picB.SizeMode = PictureBoxSizeMode.StretchImage;
+        this.picB.SendToBack();
 
         // PANEL DESCRIPCIÓN A (debajo de picA)
         this.pnlDescripcionA.Location = new Point(this.picA.Left, this.picA.Bottom + 10);

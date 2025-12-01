@@ -54,12 +54,6 @@ public partial class FormCombat : Form
     private void btnAtk_Click(int attack)
     {
         Console.WriteLine("Tu turno");
-        if (Global.effect == 1)
-        {
-            Console.WriteLine("Estas aturdido");
-            Global.effect = 0;
-            return;
-        }
         if (attack == 1)
         {
             AnimateCharacter();
@@ -103,7 +97,6 @@ public partial class FormCombat : Form
                 Console.WriteLine("Hechizo agotado");
                 return;
             }
-            //AnimateSpell(null, Global.idSpells[1]);
             // SQL ATAQUE 4 CON HECHIZO Y GUARDAS VIDA RESTANTE DE AMBOS, DAÑO REALIZADO Y ESTADO
             if (Global.idSpells[0] == 5)
             {
@@ -118,10 +111,9 @@ public partial class FormCombat : Form
                 Global.lifeMonster -= damage;  // VIDA RESTANTE EJEMPLO
                 if (Global.idSpells[0] == 2) Global.effectEnemy = 1; // HECHIZO EJEMPLO
                 else if (Global.idSpells[0] == 4) Global.effectEnemy = 2; // HECHIZO EJEMPLO
-                Global.chargeSpells[0]--;
                 Console.WriteLine(SpellNameAndSprite[Global.idSpells[0]][0] + " lanzado. " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
             }
-
+            Global.chargeSpells[0]--;
         }
         else if (attack == 5)
         {
@@ -135,16 +127,23 @@ public partial class FormCombat : Form
                 Console.WriteLine("Hechizo agotado");
                 return;
             }
-            //AnimateSpell(null, Global.idSpells[1]);
             // SQL ATAQUE 5 CON HECHIZO
-            int damage = 5; // DAÑO EJEMPLO
-            // Global.life = Global.life; // VIDA RESTANTE EJEMPLO
-            Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
-            if (Global.effectEnemy == 0) Global.effectEnemy = 2; // VIDA RESTANTE EJEMPLO
-            else if (Global.effectEnemy == 2) Global.effectEnemy = 0;
-            Global.chargeSpells[1]--;
-
-            Console.WriteLine(SpellNameAndSprite[Global.idSpells[1]][0] + " lanzado! " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
+            if (Global.idSpells[1] == 5)
+            {
+                int heal = 10;
+                Global.life += heal; // HECHIZO EJEMPLO
+                Console.WriteLine(SpellNameAndSprite[Global.idSpells[1]][0] + " lanzado. " + "Curacion: " + heal);
+            }
+            else
+            {
+                int damage = 5; // DAÑO EJEMPLO
+                // Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+                Global.lifeMonster -= damage;  // VIDA RESTANTE EJEMPLO
+                if (Global.idSpells[0] == 2) Global.effectEnemy = 1; // HECHIZO EJEMPLO
+                else if (Global.idSpells[0] == 4) Global.effectEnemy = 2; // HECHIZO EJEMPLO
+                Console.WriteLine(SpellNameAndSprite[Global.idSpells[1]][0] + " lanzado. " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
+            }
+            Global.chargeSpells[0]--;
         }
 
         System.Windows.Forms.Timer t;
@@ -257,6 +256,7 @@ public partial class FormCombat : Form
     {
         lblNivel.Text = "Nivel " + round;
         picB.Image = Image.FromFile(MonsterNameAndSprite[round][1]);
+        Global.effectEnemy = 0;
         // SQL SELECCIONAR MONSTRUO Y ASIGNAR VIDA DE MONSTRUO EN BASE A RONDA
         // sp_seleccionarMonstruo(@p_round)
         Global.lifeMonster = 100;
@@ -294,19 +294,7 @@ public partial class FormCombat : Form
         };
         t.Start();
     }
-    private void AnimateSpell(Button picAtk, int spell)
-    {
-        picAtk.Image = Image.FromFile(SpellNameAndSprite[Global.idSpells[spell]][2]);
-        System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
-        t.Interval = 500;
-        t.Tick += (s, e) =>
-        {
-            picAtk.Image = null;
-            t.Stop();
-            t.Dispose();
-        };
-        t.Start();
-    }
+
     private void AnimateMonster()
     {
         picB.Image = Image.FromFile(MonsterNameAndSprite[round][2]);
