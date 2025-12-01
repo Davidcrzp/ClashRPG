@@ -1,6 +1,6 @@
 # ClashRPG
 
-#### by: Supersell team
+#### By: Supersell team
 
 ## Contenido
 
@@ -43,15 +43,11 @@
 
 ### Personajes
 
-Presetamos la maravillosa aventura de El Caballero, El Mini pekka y El Mago. El sistema de personajes permite al jugador seleccionar entre 3 diferentes personajes provenientes del juego de "Clash Royale". Los personajes están diseñados para ofrecer estilos de juego variados y mejoran conforme avanzan durante la partida.
-
-### Mapas
-
-El juego cuenta con distintos mapas, cada uno con su propia estética y estructura. Los mapas pueden contener obstáculos, ítems especiales y distintas rutas estratégicas. La selección de mapas influye en la experiencia y las mecánicas de juego.
+Presetamos la maravillosa aventura de El Caballero, El Mini pekka y El Mago. El sistema de personajes permite al jugador seleccionar entre 3 diferentes personajes provenientes del juego de "Clash Royale". Los personajes están diseñados para ofrecer estilos de juego variados y mejoran conforme avanzan durante la partida. ¡Pero ten mucho cuidado! Si pierdes dentro de tu partida, no podrás continuar desde el "punto de guardado" porque este juego, además de RPG, es un Rogue Like. 
 
 ### Bosses
 
-Los bosses son enemigos especiales con mayor dificultad y habilidades únicas. Se enfrentan al jugador en diferentes etapas y requieren estrategias específicas para ser derrotados. Cada boss está ambientado según el mapa en el que aparece. Un boss nunca viene solo, así que prepárate para enfrentarlo junto a sus molestos minions
+Los bosses son enemigos especiales con mayor dificultad y habilidades únicas. Se enfrentan al jugador en diferentes etapas y requieren estrategias específicas para ser derrotados. Cada boss está ambientado según la arena de la que viene. Avanzar al siguiente nivel en el juego implica proseguir entre las "arenas" en el juego de "Clash Royale", por lo que te esperará un boss único y muy fuerte al final de la partida.
 
 ### Logros
 
@@ -96,14 +92,6 @@ La interfaz gráfica está desarrollada usando WinForms/WPF (según versión), p
 ### Sistema de guardado y carga
 
 El progreso del jugador se guarda automáticamente tras cada partida, permitiendo reanudar el juego en cualquier momento. Se utiliza MongoDB para datos dinámicos y SQL para datos estructurados.
-
-### Configuración y personalización
-
-Los ajustes del juego pueden modificarse en el archivo `appsettings.json`, incluyendo idioma, nivel de dificultad, calidad gráfica y preferencias de sonido.
-
-### Algoritmo de generación de mapas
-
-Los mapas se crean usando un algoritmo de generación procedural, garantizando variedad y desafíos únicos en cada partida. Además, existen mapas prefijados para modos específicos de juego.
 
 ### Conexión a MongoDB
 
