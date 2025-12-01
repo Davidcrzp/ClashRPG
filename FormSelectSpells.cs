@@ -46,17 +46,32 @@ public partial class FormSelectSpells : Form
         }
         else if (hechizosSeleccionados.Count == 1)
         {
+            // SQL HECHIZO 1
             Global.idSpells[0] = Global.spellsId[hechizosSeleccionados[0]];
         }
         else
         {
+            // SQL HECHIZO 1
+            // SQL HECHIZO 2
             Global.idSpells[0] = Global.spellsId[hechizosSeleccionados[0]];
             Global.idSpells[1] = Global.spellsId[hechizosSeleccionados[1]];
 
             MessageBox.Show("Has seleccionado: " + hechizosSeleccionados[0] + ", " + hechizosSeleccionados[1]);
         }
         this.Hide();
-        Global.combat = new FormCombat();
-        Global.combat.Show();
+
+        Global.loading = new FormLoading();
+        Global.loading.Show();
+        System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
+        t.Interval = 3000;
+        t.Tick += (s, e) =>
+        {
+            Global.loading.Hide();
+            Global.combat = new FormCombat();
+            Global.combat.Show();
+            t.Stop();
+            t.Dispose();
+        };
+        t.Start();
     }
 }

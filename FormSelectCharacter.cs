@@ -17,8 +17,8 @@ namespace ClashRPG
         private void btnMago_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Has seleccionado al MAGO.");
-            // SQL ASIGNAR PERSONAJE 1 Y GUARDAR VIDA DEL PERSONAJE
             Global.idCharacter = 1;
+            // SQL ASIGNAR PERSONAJE 1 Y GUARDAR VIDA DEL PERSONAJE
             Global.life = 100;
 
             Global.selectSpells.Show();
@@ -29,6 +29,7 @@ namespace ClashRPG
         {
             MessageBox.Show("Has seleccionado al MINI P.E.K.K.A.");
             Global.idCharacter = 2;
+            // SQL ASIGNAR PERSONAJE 1 Y GUARDAR VIDA DEL PERSONAJE
             Global.selectSpells.Show();
 
             this.Hide();
@@ -38,6 +39,7 @@ namespace ClashRPG
         {
             MessageBox.Show("Has seleccionado al CABALLERO.");
             Global.idCharacter = 3;
+            // SQL ASIGNAR PERSONAJE 1 Y GUARDAR VIDA DEL PERSONAJE
             Global.selectSpells.Show();
             this.Hide();
         }

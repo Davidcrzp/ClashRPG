@@ -12,7 +12,12 @@ partial class FormCombat : Form
 
     private PictureBox picA;
     private PictureBox picB;
-    private Label lblDescripcion;
+
+    private Panel pnlDescripcionA;
+    private Panel pnlDescripcionB;
+
+    private Label lblDescripcion;   // dentro del panel A
+    private Label lblDescripcion2;  // dentro del panel B
 
     private Button btnAtk1;
     private Button btnAtk2;
@@ -50,7 +55,12 @@ partial class FormCombat : Form
 
         this.picA = new PictureBox();
         this.picB = new PictureBox();
+
+        this.pnlDescripcionA = new Panel();
+        this.pnlDescripcionB = new Panel();
+
         this.lblDescripcion = new Label();
+        this.lblDescripcion2 = new Label();
 
         this.btnAtk1 = new Button();
         this.btnAtk2 = new Button();
@@ -80,35 +90,61 @@ partial class FormCombat : Form
         this.lblNivel.Font = new Font("Segoe UI", 12F, FontStyle.Regular);
         this.lblNivel.Location = new Point(22, 54);
 
-        // pnlTitleUnderline
+        // linea decoración
         this.pnlTitleUnderline.Size = new Size(180, 3);
         this.pnlTitleUnderline.Location = new Point(22, 82);
 
-        // btnConfig
+        // Config
         this.btnConfig.Size = new Size(44, 34);
         this.btnConfig.FlatStyle = FlatStyle.Flat;
         this.btnConfig.Location = new Point(this.ClientSize.Width - 64, 18);
         this.btnConfig.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-        this.btnConfig.Text = "";
         this.btnConfig.Click += new EventHandler(this.btnConfig_Click);
 
-        // picA (bajado un poco)
-        this.picA.Location = new Point(22, 120); // antes 100
+        // picA
+        this.picA.Location = new Point(22, 120);
         this.picA.Size = new Size(380, 200);
+        this.picA.SizeMode = PictureBoxSizeMode.StretchImage;
         this.picA.Image = Image.FromFile(CharacterNameAttackAndSprite[Global.idCharacter][4]);
 
-        // picB (más a la derecha y alineado con picA)
-        this.picB.Location = new Point(440, 30); // antes 420
+        // picB
+        this.picB.Location = new Point(440, 30);
         this.picB.Size = new Size(380, 200);
+        this.picB.SizeMode = PictureBoxSizeMode.StretchImage;
 
-        // lblDescripcion (bajada un poco)
-        this.lblDescripcion.AutoSize = false;
-        this.lblDescripcion.Location = new Point(22, 360); // antes 300
-        this.lblDescripcion.Size = new Size(640, 80);
-        this.lblDescripcion.Text = "Descripción del combate...";
-        this.lblDescripcion.Font = new Font("Segoe UI", 10F);
+        // PANEL DESCRIPCIÓN A (debajo de picA)
+        this.pnlDescripcionA.Location = new Point(this.picA.Left, this.picA.Bottom + 10);
+        this.pnlDescripcionA.Size = new Size(this.picA.Width, 70);
+        this.pnlDescripcionA.BorderStyle = BorderStyle.FixedSingle;
 
-        // Botones Ataques (izquierda)
+        // Label descripción A
+        this.lblDescripcion.Dock = DockStyle.Fill;
+        this.lblDescripcion.Text = "Descripción A...";
+        this.lblDescripcion.Font = new Font("Segoe UI", 9F);
+        this.lblDescripcion.TextAlign = ContentAlignment.MiddleLeft;
+        this.lblDescripcion.ForeColor = Color.White;
+        this.lblDescripcion.BackColor = Color.Transparent;
+
+        // Agregar label A al panel A
+        this.pnlDescripcionA.Controls.Add(this.lblDescripcion);
+
+        // PANEL DESCRIPCIÓN B (debajo de picB)
+        this.pnlDescripcionB.Location = new Point(this.picB.Left, this.picB.Bottom + 10);
+        this.pnlDescripcionB.Size = new Size(this.picB.Width, 70);
+        this.pnlDescripcionB.BorderStyle = BorderStyle.FixedSingle;
+
+        // Label descripción B
+        this.lblDescripcion2.Dock = DockStyle.Fill;
+        this.lblDescripcion2.Text = "Descripción B...";
+        this.lblDescripcion2.Font = new Font("Segoe UI", 9F);
+        this.lblDescripcion2.TextAlign = ContentAlignment.MiddleLeft;
+        this.lblDescripcion2.ForeColor = Color.White;
+        this.lblDescripcion2.BackColor = Color.Transparent;
+
+        // Agregar label B al panel B
+        this.pnlDescripcionB.Controls.Add(this.lblDescripcion2);
+
+        // botones ataque
         int btnW = 180;
         int btnH = 40;
         int margin = 22;
@@ -122,7 +158,7 @@ partial class FormCombat : Form
 
         this.btnAtk2.Text = CharacterNameAttackAndSprite[Global.idCharacter][2];
         this.btnAtk2.Size = new Size(btnW, btnH);
-        this.btnAtk2.Location = new Point(margin + (btnW + spacing), baseY);
+        this.btnAtk2.Location = new Point(margin + btnW + spacing, baseY);
         this.btnAtk2.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 
         this.btnAtk3.Text = CharacterNameAttackAndSprite[Global.idCharacter][3];
@@ -130,21 +166,18 @@ partial class FormCombat : Form
         this.btnAtk3.Location = new Point(margin + 2 * (btnW + spacing), baseY);
         this.btnAtk3.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 
-        // Botones Imagen (alineados con picB)
-        // Botones Imagen (alineados justo debajo de picB)
-        int rightX = this.picB.Left + (this.picB.Width / 2) + 40; // centrados respecto al recuadro
-        int startY = this.picB.Bottom + 20; // un margen de 20px debajo del recuadro
+        // Botones magias (debajo de picB)
+        int rightX = this.picB.Left + (this.picB.Width / 2) + 40;
+        int startY = this.picB.Bottom + 20;
 
-        this.btnImg1.Text = SpellNameAndSprite[Global.idSpells[0]][0] + ": " + Global.chargeSpells[0];
         this.btnImg1.Size = new Size(140, 90);
-        this.btnImg1.Location = new Point(rightX, startY + 100); // 100px más abajo
+        this.btnImg1.Location = new Point(rightX, startY + 100);
         this.btnImg1.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
         if (Global.idSpells[0] != 0)
             this.btnImg1.Image = Image.FromFile(SpellNameAndSprite[Global.idSpells[0]][1]);
 
-        this.btnImg2.Text = SpellNameAndSprite[Global.idSpells[1]][0] + ": " + Global.chargeSpells[1];
         this.btnImg2.Size = new Size(140, 90);
-        this.btnImg2.Location = new Point(rightX, startY + 200); // 200px más abajo
+        this.btnImg2.Location = new Point(rightX, startY + 200);
         this.btnImg2.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
         if (Global.idSpells[1] != 0)
             this.btnImg2.Image = Image.FromFile(SpellNameAndSprite[Global.idSpells[1]][1]);
@@ -152,10 +185,8 @@ partial class FormCombat : Form
         // lblStatus
         this.lblStatus.AutoSize = true;
         this.lblStatus.Location = new Point(margin, baseY - 60);
-        this.lblStatus.Text = "";
-        this.lblStatus.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+        this.lblStatus.Visible = false;
         this.lblStatus.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
-        lblStatus.ForeColor = CRGold;
 
         // Agregar controles
         this.Controls.Add(this.lblTitulo);
@@ -165,7 +196,9 @@ partial class FormCombat : Form
 
         this.Controls.Add(this.picA);
         this.Controls.Add(this.picB);
-        this.Controls.Add(this.lblDescripcion);
+
+        this.Controls.Add(this.pnlDescripcionA);
+        this.Controls.Add(this.pnlDescripcionB);
 
         this.Controls.Add(this.btnAtk1);
         this.Controls.Add(this.btnAtk2);

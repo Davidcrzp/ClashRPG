@@ -6,6 +6,7 @@ public class Global
 {
     // Login
     public static Conexion conexion;
+    public static string username;
 
     // Forms
     public static FormSettings settings;
@@ -15,6 +16,8 @@ public class Global
     public static MusicManager effectsManager;
     public static FormStartMenu startMenu;
     public static FormCombat combat;
+    public static FormLoading loading;
+    public static FormEnd end;
 
     // Variables
     public static int idCharacter = 0;

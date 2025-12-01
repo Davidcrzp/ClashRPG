@@ -67,6 +67,7 @@ public partial class FormCombat : Form
             int damage = 5; // DAÑO EJEMPLO
             Global.life = Global.life; // VIDA RESTANTE EJEMPLO
             Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
+            Global.effectEnemy = Global.effectEnemy;
 
             Console.WriteLine(CharacterNameAttackAndSprite[Global.idCharacter][attack] + ". " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
         }
@@ -75,7 +76,7 @@ public partial class FormCombat : Form
             AnimateCharacter();
             // SQL ATAQUE 2
             int damage = 10; // DAÑO EJEMPLO
-            Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+            // Global.life = Global.life; // VIDA RESTANTE EJEMPLO
             Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
 
             Console.WriteLine(CharacterNameAttackAndSprite[Global.idCharacter][attack] + ". " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
@@ -85,7 +86,7 @@ public partial class FormCombat : Form
             AnimateCharacter();
             // SQL ATAQUE 3
             int damage = 15; // DAÑO EJEMPLO
-            Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+            // Global.life = Global.life; // VIDA RESTANTE EJEMPLO
             Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
 
             Console.WriteLine(CharacterNameAttackAndSprite[Global.idCharacter][attack] + ". " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
@@ -113,7 +114,7 @@ public partial class FormCombat : Form
             else
             {
                 int damage = 5; // DAÑO EJEMPLO
-                Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+                // Global.life = Global.life; // VIDA RESTANTE EJEMPLO
                 Global.lifeMonster -= damage;  // VIDA RESTANTE EJEMPLO
                 if (Global.idSpells[0] == 2) Global.effectEnemy = 1; // HECHIZO EJEMPLO
                 else if (Global.idSpells[0] == 4) Global.effectEnemy = 2; // HECHIZO EJEMPLO
@@ -137,7 +138,7 @@ public partial class FormCombat : Form
             //AnimateSpell(null, Global.idSpells[1]);
             // SQL ATAQUE 5 CON HECHIZO
             int damage = 5; // DAÑO EJEMPLO
-            Global.life = Global.life; // VIDA RESTANTE EJEMPLO
+            // Global.life = Global.life; // VIDA RESTANTE EJEMPLO
             Global.lifeMonster = Global.lifeMonster - damage;  // VIDA RESTANTE EJEMPLO
             if (Global.effectEnemy == 0) Global.effectEnemy = 2; // VIDA RESTANTE EJEMPLO
             else if (Global.effectEnemy == 2) Global.effectEnemy = 0;
@@ -146,9 +147,25 @@ public partial class FormCombat : Form
             Console.WriteLine(SpellNameAndSprite[Global.idSpells[1]][0] + " lanzado! " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
         }
 
-        if (Global.lifeMonster == 0)
+        System.Windows.Forms.Timer t;
+
+        if (Global.lifeMonster <= 0)
         {
-            if (round == 6) FinishGame(0);
+            Console.WriteLine(round);
+            if (round == 5)
+            {
+                UpdateForm();
+                t = new System.Windows.Forms.Timer();
+                t.Interval = 1000;
+                t.Tick += (s, e) =>
+                {
+                    FinishGame(1);
+                    t.Stop();
+                    t.Dispose();
+                };
+                t.Start();
+                return;
+            }
             round++;
             NextRound();
             UpdateForm();
@@ -158,7 +175,7 @@ public partial class FormCombat : Form
         turn = !turn;
 
         UpdateForm();
-        System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
+        t = new System.Windows.Forms.Timer();
         t.Interval = 1000;
         t.Tick += (s, e) =>
         {
@@ -189,9 +206,18 @@ public partial class FormCombat : Form
         Global.lifeMonster = Global.lifeMonster;  // VIDA RESTANTE EJEMPLO
         Console.WriteLine("Ataque Enemigo! " + "Daño realizado: " + damage + ", Efecto aplicado: " + Global.effectName[Global.effectEnemy]);
 
-        if (Global.life == 0)
+        if (Global.life <= 0)
         {
-            FinishGame(1);
+            UpdateForm();
+            System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
+            t.Interval = 1000;
+            t.Tick += (s, e) =>
+            {
+                FinishGame(0);
+                t.Stop();
+                t.Dispose();
+            };
+            FinishGame(0);
             return;
         }
 
@@ -221,9 +247,10 @@ public partial class FormCombat : Form
 
     private void FinishGame(int status)
     {
-        if (status == 0) MessageBox.Show("Ganaste");
-        else MessageBox.Show("Perdiste");
-        while (true) ;
+        // SQL FINPARTIDA
+        Global.end = new FormEnd(status);
+        this.Hide();
+        Global.end.Show();
     }
 
     private void NextRound()
@@ -231,15 +258,16 @@ public partial class FormCombat : Form
         lblNivel.Text = "Nivel " + round;
         picB.Image = Image.FromFile(MonsterNameAndSprite[round][1]);
         // SQL SELECCIONAR MONSTRUO Y ASIGNAR VIDA DE MONSTRUO EN BASE A RONDA
+        // sp_seleccionarMonstruo(@p_round)
         Global.lifeMonster = 100;
     }
 
     private void UpdateText()
     {
-        lblDescripcion.Text = "Vida: " + Global.life + "                                                                                                          Vida " + MonsterNameAndSprite[round][0] + ": " + Global.lifeMonster + "\n\n";
-        lblDescripcion.Text += "Efectos: " + Global.effectName[Global.effect] + "                                                                                               Efectos: " + Global.effectName[Global.effectEnemy];
-        btnImg1.Text = SpellNameAndSprite[Global.idSpells[0]][0] + ": " + Global.chargeSpells[0];
-        btnImg2.Text = SpellNameAndSprite[Global.idSpells[1]][0] + ": " + Global.chargeSpells[1];
+        lblDescripcion.Text = "Vida: " + Global.life + "\nEfectos: " + Global.effectName[Global.effect];
+        lblDescripcion2.Text = "Vida " + MonsterNameAndSprite[round][0] + ": " + Global.lifeMonster + "\nEfectos: " + Global.effectName[Global.effectEnemy];
+        btnImg1.Text = Global.idSpells[0] != 0 ? SpellNameAndSprite[Global.idSpells[0]][0] + ": " + Global.chargeSpells[0] : SpellNameAndSprite[Global.idSpells[0]][0];
+        btnImg2.Text = Global.idSpells[1] != 0 ? SpellNameAndSprite[Global.idSpells[1]][0] + ": " + Global.chargeSpells[0] : SpellNameAndSprite[Global.idSpells[1]][0];
     }
 
     private void EnableBtn()

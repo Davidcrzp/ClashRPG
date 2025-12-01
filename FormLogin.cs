@@ -105,6 +105,8 @@ public partial class FormLogin : Form
 
     private void StartGame()
     {
+        Global.username = txtUsuario.Text;
+        // SQL INCIAR PARTIDA
         try
         {
             using (MySqlConnection connection = Global.conexion.ObtenerConexion())
@@ -112,7 +114,7 @@ public partial class FormLogin : Form
                 using (MySqlCommand command = new MySqlCommand("sp_iniciarPartida", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_nombreUsuario", txtUsuario.Text);
+                    command.Parameters.AddWithValue("@p_nombreUsuario", Global.username);
 
                     command.ExecuteScalar();
                 }
